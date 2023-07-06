@@ -13,6 +13,8 @@ public class BroccoGame : Game
     private Vector2 _screenCenter;
     private float _canvasRenderScale;
 
+    public static Texture2D Pixel { get; private set; }
+
     public BroccoGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -30,11 +32,14 @@ public class BroccoGame : Game
         // TODO: add canvas size option in constructor
         _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.X, _canvasSize.Y);
         // TODO: content loading?
+
+        Pixel = new Texture2D(GraphicsDevice, 1, 1);
+        Pixel.SetData(new[] {Color.White});
     }
 
     protected override void Update(GameTime gameTime)
     {
-        // TODO: add update logic
+        SceneManager.Update();
         base.Update(gameTime);
     }
 
@@ -42,12 +47,12 @@ public class BroccoGame : Game
     {
         GraphicsDevice.SetRenderTarget(_canvas);
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullClockwise);
-        // TODO: draw code
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        SceneManager.Render(_spriteBatch);
         _spriteBatch.End();
         GraphicsDevice.SetRenderTarget(null);
         GraphicsDevice.Clear(Color.Black);
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         _spriteBatch.Draw(_canvas, _screenCenter, null, Color.White, 0f, _screenCenter / 2f, _canvasRenderScale, SpriteEffects.None, 1f);
         _spriteBatch.End();
         base.Draw(gameTime);
