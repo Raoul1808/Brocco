@@ -8,8 +8,7 @@ public class Player : Entity
 {
     public Player()
     {
-        Color = Color.Blue;
-        Scale = Vector2.One * 50f;
+        CurrentTexture = Assets.GetTexture("PlayerShip");
     }
     
     public override void Update()

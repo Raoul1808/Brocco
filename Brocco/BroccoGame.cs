@@ -47,14 +47,9 @@ public sealed class BroccoGame : Game
 
     protected override void LoadContent()
     {
-        // TODO: make sprites and background sprite rendering system
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        // TODO: add canvas size option in constructor
         _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.Width, _canvasSize.Height);
-        Pixel = new Texture2D(GraphicsDevice, 1, 1);
-        Pixel.SetData(new[] {Color.White});
-
-        // TODO: content loading?
+        Assets.Prepare(Content, GraphicsDevice);
         SceneManager.LoadScenes();
     }
 
