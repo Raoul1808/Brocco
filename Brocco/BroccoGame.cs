@@ -41,10 +41,11 @@ public sealed class BroccoGame : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         // TODO: add canvas size option in constructor
         _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.Width, _canvasSize.Height);
-        // TODO: content loading?
-
         Pixel = new Texture2D(GraphicsDevice, 1, 1);
         Pixel.SetData(new[] {Color.White});
+
+        // TODO: content loading?
+        SceneManager.LoadScenes();
     }
 
     protected override void Update(GameTime gameTime)

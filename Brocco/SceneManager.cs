@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,6 +12,16 @@ public static class SceneManager
     {
         _scenes.TryAdd(name, scene);
         _currentSceneRef ??= scene;
+    }
+
+    internal static void LoadScenes()
+    {
+        foreach (var scene in _scenes.Values)
+            if (!scene.Loaded)
+            {
+                scene.Load();
+                scene.Loaded = true;
+            }
     }
 
     public static void Remove(string name)
