@@ -18,33 +18,33 @@ public abstract class Entity
     /// <summary>
     /// The current position of this entity.
     /// </summary>
-    protected Vector2 Position;
+    protected Vector2 Position = Vector2.Zero;
 
     /// <summary>
     /// This entity's current color. Mainly used for rendering.
     /// </summary>
-    protected Color Color;
+    protected Color Color = Color.White;
 
     /// <summary>
     /// This entity's current transparency. Mainly used for rendering.
     /// </summary>
-    protected float Alpha;
+    protected float Alpha = 1f;
 
     /// <summary>
     /// This entity's rotation. Mainly used for rendering.
     /// </summary>
     /// <remarks>Rotation is measured in radians.</remarks>
-    protected float Rotation;
+    protected float Rotation = 0f;
 
     /// <summary>
     /// This entity's scale. Mainly used for rendering.
     /// </summary>
-    protected Vector2 Scale;
+    protected Vector2 Scale = Vector2.One;
 
     /// <summary>
     /// This entity's current texture. If the texture is not set, it will default to a white pixel.
     /// </summary>
-    protected Texture2D CurrentTexture;
+    protected Texture2D CurrentTexture = null;
 
     /// <summary>
     /// This method is called every frame.
