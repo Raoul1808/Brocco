@@ -14,27 +14,32 @@ public abstract class Entity
     /// This entity's unique ID.
     /// </summary>
     public readonly uint Id = _nextEntityId++;
-    
+
     /// <summary>
     /// The current position of this entity.
     /// </summary>
-    public Vector2 Position { get; protected set; }
-    
+    protected Vector2 Position;
+
     /// <summary>
     /// This entity's current color. Mainly used for rendering.
     /// </summary>
-    public Color Color { get; protected set; }
-    
+    protected Color Color;
+
+    /// <summary>
+    /// This entity's current transparency. Mainly used for rendering.
+    /// </summary>
+    protected float Alpha;
+
     /// <summary>
     /// This entity's rotation. Mainly used for rendering.
     /// </summary>
     /// <remarks>Rotation is measured in radians.</remarks>
-    public float Rotation { get; protected set; }
+    protected float Rotation;
 
     /// <summary>
     /// This entity's scale. Mainly used for rendering.
     /// </summary>
-    public Vector2 Scale { get; protected set; }
+    protected Vector2 Scale;
 
     /// <summary>
     /// This entity's current texture. If the texture is not set, it will default to a white pixel.
@@ -53,6 +58,6 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? BroccoGame.Pixel;
-        spriteBatch.Draw(tex, Position, null, Color, Rotation, Vector2.One * 0.5f, Scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, Vector2.One * 0.5f, Scale, SpriteEffects.None, 0f);
     }
 }

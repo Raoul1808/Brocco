@@ -14,17 +14,13 @@ public class Player : Entity
     
     public override void Update()
     {
-        var pos = Position;
-        
         if (InputManager.GetKeyDown(Keys.D))
-            pos.X++;
+            Position.X++;
         if (InputManager.GetKeyDown(Keys.Q))
-            pos.X--;
+            Position.X--;
         if (InputManager.GetKeyDown(Keys.Z))
-            pos.Y--;
+            Position.Y--;
         if (InputManager.GetKeyDown(Keys.S))
-            pos.Y++;
-
-        Position = pos;
+            Position.Y++;
     }
 }
