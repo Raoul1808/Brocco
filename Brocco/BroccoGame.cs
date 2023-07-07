@@ -2,6 +2,7 @@ using System;
 using Brocco.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Size = System.Drawing.Size;
 
 namespace Brocco;
 
@@ -10,20 +11,28 @@ public sealed class BroccoGame : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private RenderTarget2D _canvas;
-    private Point _canvasSize;
+    private Size _canvasSize;
     private Vector2 _screenCenter;
     private float _canvasRenderScale;
+    private Vector2 _canvasDrawOffset;
 
     public static Texture2D Pixel { get; private set; }
 
     public BroccoGame()
+        : this(new BroccoGameSettings())
+    {
+    }
+    
+    public BroccoGame(BroccoGameSettings settings)
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = settings.ShowMouse;
         // TODO: user resizing logic and auto scaling?
-        _canvasSize = new Point(640, 360);
-        SetResolution(1280, 720);
+        _canvasSize = settings.CanvasSize;
+        _canvasDrawOffset = new Vector2(_canvasSize.Width / 2f, _canvasSize.Height / 2f);
+        var sz = settings.Resolution;
+        SetResolution(sz.Width, sz.Height);
     }
 
     protected override void LoadContent()
@@ -31,7 +40,7 @@ public sealed class BroccoGame : Game
         // TODO: make sprites and background sprite rendering system
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         // TODO: add canvas size option in constructor
-        _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.X, _canvasSize.Y);
+        _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.Width, _canvasSize.Height);
         // TODO: content loading?
 
         Pixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -55,7 +64,7 @@ public sealed class BroccoGame : Game
         GraphicsDevice.SetRenderTarget(null);
         GraphicsDevice.Clear(Color.Black);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
-        _spriteBatch.Draw(_canvas, _screenCenter, null, Color.White, 0f, _screenCenter / 2f, _canvasRenderScale, SpriteEffects.None, 1f);
+        _spriteBatch.Draw(_canvas, _screenCenter, null, Color.White, 0f, _canvasDrawOffset, _canvasRenderScale, SpriteEffects.None, 1f);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
@@ -67,6 +76,6 @@ public sealed class BroccoGame : Game
         _graphics.ApplyChanges();
 
         _screenCenter = new Vector2(width / 2f, height / 2f);
-        _canvasRenderScale = Math.Min(width / (float)_canvasSize.X, height / (float)_canvasSize.Y);
+        _canvasRenderScale = Math.Min(width / (float)_canvasSize.Width, height / (float)_canvasSize.Height);
     }
 }

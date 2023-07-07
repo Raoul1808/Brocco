@@ -7,7 +7,7 @@ namespace Brocco.Example;
 
 public class ExampleScene : Scene
 {
-    private Vector2 _rectPos = Vector2.Zero * 100f;
+    private Vector2 _rectPos = Vector2.One * 100f;
 
     public override void Update()
     {
