@@ -47,6 +47,11 @@ public abstract class Entity
     protected Texture2D CurrentTexture = null;
 
     /// <summary>
+    /// This entity's depth on screen. Mainly used for rendering.
+    /// </summary>
+    protected float LayerDepth = 1f;
+
+    /// <summary>
     /// This method is called every frame.
     /// </summary>
     public abstract void Update();
@@ -58,6 +63,6 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? BroccoGame.Pixel;
-        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, Vector2.One * 0.5f, Scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, new Vector2(CurrentTexture.Width / 2f, CurrentTexture.Height / 2f), Scale, SpriteEffects.None, LayerDepth);
     }
 }
