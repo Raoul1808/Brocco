@@ -8,8 +8,8 @@ public class Player : Entity
 {
     public Player()
     {
-        CurrentTexture = BroccoGame.Pixel;
         Color = Color.Blue;
+        Scale = Vector2.One * 50f;
     }
     
     public override void Update()

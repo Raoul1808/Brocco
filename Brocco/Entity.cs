@@ -28,7 +28,13 @@ public abstract class Entity
     /// <summary>
     /// This entity's rotation. Mainly used for rendering.
     /// </summary>
+    /// <remarks>Rotation is measured in radians.</remarks>
     public float Rotation { get; protected set; }
+
+    /// <summary>
+    /// This entity's scale. Mainly used for rendering.
+    /// </summary>
+    public Vector2 Scale { get; protected set; }
 
     /// <summary>
     /// This entity's current texture. If the texture is not set, it will default to a white pixel.
@@ -47,6 +53,6 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? BroccoGame.Pixel;
-        spriteBatch.Draw(tex, Position, null, Color, Rotation, Vector2.One * 0.5f, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(tex, Position, null, Color, Rotation, Vector2.One * 0.5f, Scale, SpriteEffects.None, 0f);
     }
 }
