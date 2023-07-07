@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,6 +17,7 @@ public static class Assets
     public static Texture2D Pixel { get; private set; }
 
     private static Dictionary<string, Texture2D> _loadedTextures = new();
+    private static Dictionary<string, SoundEffect> _loadedSounds = new();
 
     internal static void Prepare(ContentManager content, GraphicsDevice graphicsDevice)
     {
@@ -42,6 +44,26 @@ public static class Assets
         catch
         {
             return Pixel;
+        }
+    }
+
+    /// <summary>
+    /// Gets a sound effect corresponding to the requested name. If the sound effect isn't already loaded, it will be cached when calling this method.
+    /// </summary>
+    /// <param name="assetName">The asset to load/get</param>
+    /// <returns>The asset requested, or null if not found.</returns>
+    public static SoundEffect GetSound(string assetName)
+    {
+        if (_loadedSounds.TryGetValue(assetName, out var sfx)) return sfx;
+        try
+        {
+            sfx = _content.Load<SoundEffect>(assetName);
+            _loadedSounds.Add(assetName, sfx);
+            return sfx;
+        }
+        catch
+        {
+            return null;
         }
     }
 }
