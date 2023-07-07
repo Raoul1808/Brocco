@@ -23,6 +23,11 @@ public struct BroccoGameSettings
     public Size Resolution;
 
     /// <summary>
+    /// The name fo the assets directory from which resources will be loaded.
+    /// </summary>
+    public string AssetsDirectory;
+
+    /// <summary>
     /// Creates a <c>BroccoGameSettings</c> instance with default settings.
     /// </summary>
     public BroccoGameSettings()
@@ -30,5 +35,6 @@ public struct BroccoGameSettings
         CanvasSize = new Size(640, 360);
         ShowMouse = false;
         Resolution = new Size(1280, 720);
+        AssetsDirectory = "Content";
     }
 }

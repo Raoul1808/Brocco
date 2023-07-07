@@ -36,7 +36,7 @@ public sealed class BroccoGame : Game
     public BroccoGame(BroccoGameSettings settings)
     {
         _graphics = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
+        Content.RootDirectory = settings.AssetsDirectory;
         IsMouseVisible = settings.ShowMouse;
         // TODO: user resizing logic and auto scaling?
         _canvasSize = settings.CanvasSize;
