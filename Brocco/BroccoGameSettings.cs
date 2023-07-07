@@ -1,4 +1,5 @@
-using System.Drawing;
+using Microsoft.Xna.Framework;
+using Size = System.Drawing.Size;
 
 namespace Brocco;
 
@@ -23,9 +24,14 @@ public struct BroccoGameSettings
     public Size Resolution;
 
     /// <summary>
-    /// The name fo the assets directory from which resources will be loaded.
+    /// The name of the assets directory from which resources will be loaded.
     /// </summary>
     public string AssetsDirectory;
+
+    /// <summary>
+    /// The canvas' clear color.
+    /// </summary>
+    public Color ClearColor;
 
     /// <summary>
     /// Creates a <c>BroccoGameSettings</c> instance with default settings.
@@ -36,5 +42,6 @@ public struct BroccoGameSettings
         ShowMouse = false;
         Resolution = new Size(1280, 720);
         AssetsDirectory = "Content";
+        ClearColor = Color.Black;
     }
 }

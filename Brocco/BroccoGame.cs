@@ -11,13 +11,14 @@ namespace Brocco;
 /// </summary>
 public sealed class BroccoGame : Game
 {
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private RenderTarget2D _canvas;
-    private Size _canvasSize;
+    private readonly Size _canvasSize;
     private Vector2 _screenCenter;
     private float _canvasRenderScale;
-    private Vector2 _canvasDrawOffset;
+    private readonly Vector2 _canvasDrawOffset;
+    private readonly Color _clearColor;
 
     public static Texture2D Pixel { get; private set; }
 
@@ -43,6 +44,7 @@ public sealed class BroccoGame : Game
         _canvasDrawOffset = new Vector2(_canvasSize.Width / 2f, _canvasSize.Height / 2f);
         var sz = settings.Resolution;
         SetResolution(sz.Width, sz.Height);
+        _clearColor = settings.ClearColor;
     }
 
     protected override void LoadContent()
@@ -63,7 +65,7 @@ public sealed class BroccoGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.SetRenderTarget(_canvas);
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(_clearColor);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         SceneManager.Render(_spriteBatch);
         _spriteBatch.End();
