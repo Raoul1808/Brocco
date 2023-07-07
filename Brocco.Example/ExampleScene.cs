@@ -8,9 +8,4 @@ public class ExampleScene : Scene
     {
         AddToScene(_player = new Player());
     }
-    
-    public override void Update()
-    {
-        _player.Update();
-    }
 }
