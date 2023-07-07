@@ -6,6 +6,9 @@ using Size = System.Drawing.Size;
 
 namespace Brocco;
 
+/// <summary>
+/// A Brocco Game Loop class.
+/// </summary>
 public sealed class BroccoGame : Game
 {
     private GraphicsDeviceManager _graphics;
@@ -18,11 +21,18 @@ public sealed class BroccoGame : Game
 
     public static Texture2D Pixel { get; private set; }
 
+    /// <summary>
+    /// Creates a Brocco Game Loop with default settings.
+    /// </summary>
     public BroccoGame()
         : this(new BroccoGameSettings())
     {
     }
     
+    /// <summary>
+    /// Creates a Brocco Game Loop using the passed settings.
+    /// </summary>
+    /// <param name="settings">The settings for the Brocco Game Loop</param>
     public BroccoGame(BroccoGameSettings settings)
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -70,6 +80,11 @@ public sealed class BroccoGame : Game
         base.Draw(gameTime);
     }
 
+    /// <summary>
+    /// Changes the game's viewport/resolution.
+    /// </summary>
+    /// <param name="width">Width in pixels</param>
+    /// <param name="height">Height in pixels</param>
     public void SetResolution(int width, int height)
     {
         _graphics.PreferredBackBufferWidth = width;

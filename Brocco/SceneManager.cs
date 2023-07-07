@@ -3,11 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Brocco;
 
+/// <summary>
+/// This class manages the current scene on screen.
+/// </summary>
 public static class SceneManager
 {
     private static Dictionary<string, Scene> _scenes = new();
     private static Scene _currentSceneRef = null;
 
+    /// <summary>
+    /// Register a scene to the <c>SceneManager</c>
+    /// </summary>
+    /// <param name="name">The name of the scene</param>
+    /// <param name="scene">The scene instance</param>
     public static void Add(string name, Scene scene)
     {
         _scenes.TryAdd(name, scene);
@@ -24,23 +32,31 @@ public static class SceneManager
             }
     }
 
+    /// <summary>
+    /// Removes a scene from the <c>SceneManager</c>
+    /// </summary>
+    /// <param name="name">The name of the scene to remove</param>
     public static void Remove(string name)
     {
         _scenes.Remove(name);
     }
 
+    /// <summary>
+    /// Changes the current scene
+    /// </summary>
+    /// <param name="name">The name of the scene to change to</param>
     public static void Change(string name)
     {
         if (_scenes.TryGetValue(name, out var scene))
             _currentSceneRef = scene;
     }
 
-    public static void Update()
+    internal static void Update()
     {
         _currentSceneRef?.Update();
     }
 
-    public static void Render(SpriteBatch spriteBatch)
+    internal static void Render(SpriteBatch spriteBatch)
     {
         _currentSceneRef?.Render(spriteBatch);
     }
