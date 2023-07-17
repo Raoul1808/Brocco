@@ -21,7 +21,7 @@ public struct BroccoGameSettings
     /// <summary>
     /// The resolution of the game's window. Not to be confused with the canvas size. Defaults to 2 times the canvas size.
     /// </summary>
-    public Size Resolution;
+    public Size? Resolution;
 
     /// <summary>
     /// The name of the assets directory from which resources will be loaded. Defaults to "Content"
@@ -40,7 +40,7 @@ public struct BroccoGameSettings
     {
         CanvasSize = new Size(640, 360);
         ShowMouse = false;
-        Resolution = CanvasSize * 2;
+        Resolution = null;
         AssetsDirectory = "Content";
         ClearColor = Color.Black;
     }

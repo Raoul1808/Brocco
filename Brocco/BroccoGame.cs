@@ -42,7 +42,7 @@ public sealed class BroccoGame : Game
         // TODO: user resizing logic and auto scaling?
         _canvasSize = settings.CanvasSize;
         _canvasDrawOffset = new Vector2(_canvasSize.Width / 2f, _canvasSize.Height / 2f);
-        var sz = settings.Resolution;
+        var sz = settings.Resolution ?? settings.CanvasSize * 2;
         SetResolution(sz.Width, sz.Height);
         _clearColor = settings.ClearColor;
     }
