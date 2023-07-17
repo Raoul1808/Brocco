@@ -19,7 +19,7 @@ public struct BroccoGameSettings
     public bool ShowMouse;
     
     /// <summary>
-    /// The resolution of the game's window. Not to be confused with the canvas size. Defaults to 2 times the canvas size.
+    /// The resolution of the game's window. Not to be confused with the canvas size. Defaults to null (this value will be turned into twice the canvas size).
     /// </summary>
     public Size? Resolution;
 
