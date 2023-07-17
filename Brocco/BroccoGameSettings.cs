@@ -1,5 +1,5 @@
+using Brocco.Basic;
 using Microsoft.Xna.Framework;
-using Size = System.Drawing.Size;
 
 namespace Brocco;
 
