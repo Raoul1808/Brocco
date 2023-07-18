@@ -5,12 +5,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Brocco;
+namespace Brocco.Menu;
 
 /// <summary>
 /// A menu system with embedded menu logic.
 /// </summary>
-public class Menu
+public class MenuObject
 {
     private List<string> _options = new();
     private int _currentOption = 0;
@@ -24,7 +24,7 @@ public class Menu
     /// <param name="font">The font used by the menu</param>
     /// <param name="position">The starting position of the menu</param>
     /// <param name="fontSize">The font size used for text rendering</param>
-    public Menu(FontSystem font, Vector2 position, float fontSize)
+    public MenuObject(FontSystem font, Vector2 position, float fontSize)
     {
         _font = font;
         _fontSize = fontSize;
