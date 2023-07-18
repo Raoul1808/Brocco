@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -18,6 +20,7 @@ public static class Assets
 
     private static Dictionary<string, Texture2D> _loadedTextures = new();
     private static Dictionary<string, SoundEffect> _loadedSounds = new();
+    private static Dictionary<string, FontSystem> _loadedFontFamilies = new();
 
     internal static void Prepare(ContentManager content, GraphicsDevice graphicsDevice)
     {
@@ -65,5 +68,23 @@ public static class Assets
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Preloads a font for future use.
+    /// </summary>
+    /// <param name="fontName">The font name</param>
+    /// <param name="fontFiles">A collection of paths to the font</param>
+    public static void PreloadFont(string fontName, string[] fontFiles)
+    {
+        FontSystem font = new();
+        foreach (string file in fontFiles)
+            font.AddFont(File.ReadAllBytes(file));
+        _loadedFontFamilies.Add(fontName, font);
+    }
+
+    public static FontSystem GetFontSystem(string fontName)
+    {
+        return _loadedFontFamilies[fontName];
     }
 }

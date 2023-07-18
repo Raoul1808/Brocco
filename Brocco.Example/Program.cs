@@ -12,6 +12,8 @@ internal class Program
             CanvasSize = new Size(384, 216),
         });
         game.Window.Title = "Example Game Made With Brocco";
+        
+        Assets.PreloadFont("Noto Sans", new[] {"Content/NotoSans-Medium.ttf"});
 
         SceneManager.Add("Example Scene", new ExampleScene());
         
