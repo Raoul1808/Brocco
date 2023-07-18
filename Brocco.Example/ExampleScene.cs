@@ -1,3 +1,4 @@
+using System;
 using Brocco.Menu;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
@@ -15,11 +16,11 @@ public class ExampleScene : Scene
     {
         AddToScene(_player = new Player());
         _font = Assets.GetFontSystem("Noto Sans");
-        _menu = MenuBuilder.CreateMenu(_font, Vector2.One * 100)
-            .AddEntry("New Game")
-            .AddEntry("Options")
-            .AddEntry("Credits")
-            .AddEntry("Exit")
+        _menu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
+            .AddButton("New Game")
+            .AddToggle("Is This a Toggle?")
+            .AddArraySelect("Select between these meme numbers", new int[] { 69, 420, 727, 1116 })
+            .AddButton("Exit", _ => {Console.WriteLine("Sorry but there is no escape");})
             .Build();
     }
 

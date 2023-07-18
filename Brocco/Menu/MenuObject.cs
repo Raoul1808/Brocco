@@ -12,7 +12,7 @@ namespace Brocco.Menu;
 /// </summary>
 public class MenuObject
 {
-    private List<string> _options = new();
+    private List<MenuEntry> _entries = new();
     private int _currentOption = 0;
     private Vector2 _position;
     private FontSystem _font;
@@ -35,9 +35,9 @@ public class MenuObject
     /// Adds a menu option.
     /// </summary>
     /// <param name="option">The option to add</param>
-    public void AddOption(string option)
+    public void AddEntry(MenuEntry entry)
     {
-        _options.Add(option);
+        _entries.Add(entry);
     }
 
     /// <summary>
@@ -49,15 +49,17 @@ public class MenuObject
         {
             _currentOption--;
             if (_currentOption < 0)
-                _currentOption = _options.Count - 1;
+                _currentOption = _entries.Count - 1;
         }
 
         if (InputManager.GetKeyPress(Keys.Down))
         {
             _currentOption++;
-            if (_currentOption >= _options.Count)
+            if (_currentOption >= _entries.Count)
                 _currentOption = 0;
         }
+        
+        _entries[_currentOption].Update();
     }
 
     private Vector2 StringLength(string text)
@@ -74,13 +76,13 @@ public class MenuObject
     {
         var font = _font.GetFont(_fontSize);
         float gap = _fontSize * 1.125f;
-        for (int i = 0; i < _options.Count; i++)
+        for (int i = 0; i < _entries.Count; i++)
         {
             bool isCurrent = i == _currentOption;
-            string option = _options[i];
+            var entry = _entries[i];
             Vector2 pos = new Vector2(_position.X, _position.Y + i * gap);
-            Vector2 length = StringLength(option);
-            spriteBatch.DrawString(font, option, pos, isCurrent ? Color.Yellow : Color.White, origin: length / 2f);
+            Vector2 length = StringLength(entry.Label);
+            entry.Render(spriteBatch, _font, pos, isCurrent ? Color.Yellow : Color.White, origin: length / 2);
         }
     }
 }
