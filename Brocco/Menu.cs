@@ -4,10 +4,12 @@ using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StbTrueTypeSharp;
 
 namespace Brocco;
 
+/// <summary>
+/// A menu system with embedded menu logic.
+/// </summary>
 public class Menu
 {
     private List<string> _options = new();
@@ -16,6 +18,12 @@ public class Menu
     private FontSystem _font;
     private float _fontSize;
 
+    /// <summary>
+    /// Creates a new menu instance.
+    /// </summary>
+    /// <param name="font">The font used by the menu</param>
+    /// <param name="position">The starting position of the menu</param>
+    /// <param name="fontSize">The font size used for text rendering</param>
     public Menu(FontSystem font, Vector2 position, float fontSize)
     {
         _font = font;
@@ -23,11 +31,18 @@ public class Menu
         _position = position;
     }
 
+    /// <summary>
+    /// Adds a menu option.
+    /// </summary>
+    /// <param name="option">The option to add</param>
     public void AddOption(string option)
     {
         _options.Add(option);
     }
 
+    /// <summary>
+    /// This method is called every frame.
+    /// </summary>
     public void Update()
     {
         if (InputManager.GetKeyPress(Keys.Up))
@@ -52,10 +67,14 @@ public class Menu
         return new Vector2(b.X2, _fontSize);
     }
 
+    /// <summary>
+    /// This method is called every frame. Renders the menu and its text.
+    /// </summary>
+    /// <param name="spriteBatch"></param>
     public void Render(SpriteBatch spriteBatch)
     {
         var font = _font.GetFont(_fontSize);
-        float gap = font.FontSize * 1.125f;
+        float gap = _fontSize * 1.125f;
         for (int i = 0; i < _options.Count; i++)
         {
             bool isCurrent = i == _currentOption;
