@@ -62,8 +62,7 @@ public class Menu
 
     private Vector2 StringLength(string text)
     {
-        Bounds b = new Bounds();
-        b = _font.GetFont(_fontSize).TextBounds(text, Vector2.Zero);
+        Bounds b = _font.GetFont(_fontSize).TextBounds(text, Vector2.Zero);
         return new Vector2(b.X2, _fontSize);
     }
 
@@ -80,8 +79,8 @@ public class Menu
             bool isCurrent = i == _currentOption;
             string option = _options[i];
             Vector2 pos = new Vector2(_position.X, _position.Y + i * gap);
-            Vector2 offset = StringLength(option) * 0.5f;
-            spriteBatch.DrawString(font, option, pos, isCurrent ? Color.Yellow : Color.White, origin: offset);
+            Vector2 length = StringLength(option);
+            spriteBatch.DrawString(font, option, pos, isCurrent ? Color.Yellow : Color.White, origin: length / 2f);
         }
     }
 }
