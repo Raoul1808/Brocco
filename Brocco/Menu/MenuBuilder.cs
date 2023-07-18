@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace Brocco.Menu;
 
+/// <summary>
+/// A helper class designed to make menu creation easier.
+/// </summary>
 public class MenuBuilder
 {
     private List<MenuEntry> _menuEntries = new();
@@ -18,11 +21,24 @@ public class MenuBuilder
         _fontSize = fontSize;
     }
 
+    /// <summary>
+    /// Creates a menu builder instance.
+    /// </summary>
+    /// <param name="font">The font to use for the menu</param>
+    /// <param name="position">The starting position of the menu</param>
+    /// <param name="fontSize">The font size of the menu's text</param>
+    /// <returns>A new <c>MenuBuilder</c> instance</returns>
     public static MenuBuilder CreateMenu(FontSystem font, Vector2 position, float fontSize = 32f)
     {
         return new MenuBuilder(font, position, fontSize);
     }
 
+    /// <summary>
+    /// Adds a menu button to the menu builder.
+    /// </summary>
+    /// <param name="name">The label attached to the button</param>
+    /// <param name="action">The method that will run when this button is pressed</param>
+    /// <returns>The current <c>MenuBuilder</c> instance</returns>
     public MenuBuilder AddButton(string name, MenuButton.MenuButtonPress action = null)
     {
         var entry = new MenuButton
@@ -36,6 +52,12 @@ public class MenuBuilder
         return this;
     }
 
+    /// <summary>
+    /// Adds a toggle button to the menu builder.
+    /// </summary>
+    /// <param name="name">The label attached to the toggle</param>
+    /// <param name="action">The method that will run when this toggle changes state</param>
+    /// <returns>The current <c>MenuBuilder</c> instance</returns>
     public MenuBuilder AddToggle(string name, MenuToggle.MenuTogglePress action = null)
     {
         var entry = new MenuToggle
@@ -49,6 +71,14 @@ public class MenuBuilder
         return this;
     }
 
+    /// <summary>
+    /// Adds a selection button to the menu builder.
+    /// </summary>
+    /// <param name="name">The label attached to the selection</param>
+    /// <param name="selections">The different possible selections as an array</param>
+    /// <param name="action">The method that will run when the selection changes</param>
+    /// <typeparam name="T">The type of the selection array</typeparam>
+    /// <returns>The current <c>MenuBuilder</c> instance</returns>
     public MenuBuilder AddArraySelect<T>(string name, T[] selections, MenuArraySelect<T>.MenuArraySelectChange action = null)
     {
         var entry = new MenuArraySelect<T>()
@@ -63,6 +93,10 @@ public class MenuBuilder
         return this;
     }
 
+    /// <summary>
+    /// Creates the final Menu instance, ready to use.
+    /// </summary>
+    /// <returns>The <c>Menu</c> instance created</returns>
     public MenuObject Build()
     {
         var menu = new MenuObject(_font, _startingPosition, _fontSize);
