@@ -16,7 +16,6 @@ public class MenuObject
     private int _currentOption = 0;
     private Vector2 _position;
     private FontSystem _font;
-    private float _fontSize;
 
     /// <summary>
     /// Creates a new menu instance.
@@ -24,10 +23,9 @@ public class MenuObject
     /// <param name="font">The font used by the menu</param>
     /// <param name="position">The starting position of the menu</param>
     /// <param name="fontSize">The font size used for text rendering</param>
-    public MenuObject(FontSystem font, Vector2 position, float fontSize)
+    public MenuObject(FontSystem font, Vector2 position)
     {
         _font = font;
-        _fontSize = fontSize;
         _position = position;
     }
 
@@ -62,27 +60,20 @@ public class MenuObject
         _entries[_currentOption].Update();
     }
 
-    private Vector2 StringLength(string text)
-    {
-        Bounds b = _font.GetFont(_fontSize).TextBounds(text, Vector2.Zero);
-        return new Vector2(b.X2, _fontSize);
-    }
-
     /// <summary>
     /// This method is called every frame. Renders the menu and its text.
     /// </summary>
     /// <param name="spriteBatch">The <c>SpriteBatch</c> instance used in the Brocco Game Loop</param>
     public void Render(SpriteBatch spriteBatch)
     {
-        var font = _font.GetFont(_fontSize);
-        float gap = _fontSize * 1.125f;
+        float previousFontSize = 0f;
         for (int i = 0; i < _entries.Count; i++)
         {
             bool isCurrent = i == _currentOption;
             var entry = _entries[i];
-            Vector2 pos = new Vector2(_position.X, _position.Y + i * gap);
-            Vector2 length = StringLength(entry.Label);
-            entry.Render(spriteBatch, _font, pos, isCurrent ? Color.Yellow : Color.White, origin: length / 2);
+            Vector2 pos = new Vector2(_position.X, _position.Y + i * previousFontSize * 1.125f);
+            entry.Render(spriteBatch, _font, pos, isCurrent ? Color.Yellow : Color.White);
+            previousFontSize = entry.FontSize;
         }
     }
 }

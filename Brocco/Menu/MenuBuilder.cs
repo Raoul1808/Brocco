@@ -99,7 +99,7 @@ public class MenuBuilder
     /// <returns>The <c>Menu</c> instance created</returns>
     public MenuObject Build()
     {
-        var menu = new MenuObject(_font, _startingPosition, _fontSize);
+        var menu = new MenuObject(_font, _startingPosition);
         foreach (var entry in _menuEntries)
             menu.AddEntry(entry);
         return menu;

@@ -12,7 +12,7 @@ public abstract class MenuEntry
     public float FontSize { get; set; }
 
     public abstract void Update();
-    public abstract void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color, Vector2 origin);
+    public abstract void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color);
 }
 
 public sealed class MenuButton : MenuEntry
@@ -23,9 +23,12 @@ public sealed class MenuButton : MenuEntry
             OnButtonPress?.Invoke(this);
     }
 
-    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color, Vector2 origin)
+    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
     {
-        spriteBatch.DrawString(font.GetFont(FontSize), Label, position, color, origin: origin);
+        var f = font.GetFont(FontSize);
+        var length = f.MeasureString(Label);
+        length.Y = FontSize;
+        spriteBatch.DrawString(font.GetFont(FontSize), Label, position, color, origin: length * 0.5f);
     }
 
     public delegate void MenuButtonPress(MenuButton sender);
@@ -46,9 +49,13 @@ public sealed class MenuToggle : MenuEntry
         }
     }
 
-    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color, Vector2 origin)
+    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
     {
-        spriteBatch.DrawString(font.GetFont(FontSize), Label + ": " + IsChecked, position, color, origin: origin);
+        var text = Label + ": " + IsChecked;
+        var f = font.GetFont(FontSize);
+        var length = f.MeasureString(text);
+        length.Y = FontSize;
+        spriteBatch.DrawString(font.GetFont(FontSize), text, position, color, origin: length * 0.5f);
     }
 
     public delegate void MenuTogglePress(MenuToggle sender, bool newState);
@@ -82,9 +89,13 @@ public sealed class MenuArraySelect<T> : MenuEntry
         }
     }
 
-    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color, Vector2 origin)
+    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
     {
-        spriteBatch.DrawString(font.GetFont(FontSize), Label + "  < " + SelectOptions[CurrentOption] + " >", position, color, origin: origin);
+        var text = Label + "  < " + SelectOptions[CurrentOption] + " >";
+        var f = font.GetFont(FontSize);
+        var length = f.MeasureString(text);
+        length.Y = FontSize;
+        spriteBatch.DrawString(font.GetFont(FontSize), text, position, color, origin: length * 0.5f);
     }
 
     public delegate void MenuArraySelectChange(MenuArraySelect<T> sender, T selectedOption);
