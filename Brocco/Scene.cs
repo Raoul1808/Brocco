@@ -30,13 +30,21 @@ public abstract class Scene
     }
 
     /// <summary>
-    /// This method renders every registered entity and is called every frame. Override this to change the rendering code.
+    /// This method renders to the canvas every registered entity and is called every frame. Override this to change the rendering code.
     /// </summary>
     /// <param name="spriteBatch">The <c>SpriteBatch</c> instance used in the Brocco Game Loop</param>
-    public virtual void Render(SpriteBatch spriteBatch)
+    public virtual void CanvasRender(SpriteBatch spriteBatch)
     {
         foreach (Entity entity in _entities)
             entity.Render(spriteBatch);
+    }
+
+    /// <summary>
+    /// This method is called when the canvas is rendered to the screen. Override this to add things to render.
+    /// </summary>
+    /// <param name="spriteBatch">The <c>SpriteBatch</c> instance used in the Brocco Game Loop</param>
+    public virtual void ScreenRender(SpriteBatch spriteBatch)
+    {
     }
 
     /// <summary>

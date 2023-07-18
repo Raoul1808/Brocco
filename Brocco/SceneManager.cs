@@ -56,8 +56,13 @@ public static class SceneManager
         _currentSceneRef?.Update();
     }
 
-    internal static void Render(SpriteBatch spriteBatch)
+    internal static void CanvasRender(SpriteBatch spriteBatch)
     {
-        _currentSceneRef?.Render(spriteBatch);
+        _currentSceneRef?.CanvasRender(spriteBatch);
+    }
+
+    internal static void ScreenRender(SpriteBatch spriteBatch)
+    {
+        _currentSceneRef?.ScreenRender(spriteBatch);
     }
 }
