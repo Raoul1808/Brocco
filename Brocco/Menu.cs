@@ -69,7 +69,7 @@ public class Menu
     /// <summary>
     /// This method is called every frame. Renders the menu and its text.
     /// </summary>
-    /// <param name="spriteBatch"></param>
+    /// <param name="spriteBatch">The <c>SpriteBatch</c> instance used in the Brocco Game Loop</param>
     public void Render(SpriteBatch spriteBatch)
     {
         var font = _font.GetFont(_fontSize);
