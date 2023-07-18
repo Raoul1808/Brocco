@@ -3,6 +3,17 @@ A small .NET Library based on FNA to kickstart game projects.
  
 The structure of the project is pretty much experimental. It might evolve over time.
 
+## Features
+This is a non-exhaustive list of Brocco's currently implemented features.
+- Scene Manager
+- Automatic Entity Rendering
+  - Manual access to rendering code is still possible
+- Sound, Font and Texture loading
+- Text Rendering
+- Keyboard Input Handling
+- High-Level Menu Builder API
+- Automatic Keyboard Menu Navigation Management
+
 ## Building
 1. Download and install the .NET 6 SDK
 2. Clone this repo and its submodules
