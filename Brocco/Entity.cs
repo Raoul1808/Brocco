@@ -58,6 +58,20 @@ public abstract class Entity
     /// </summary>
     public Scene Scene { get; internal set; }
 
+    public Rectangle BoundingBox
+    {
+        get
+        {
+            var tex = CurrentTexture ?? Assets.Pixel;
+            var size = new Vector2(Scale.X * tex.Width, Scale.Y * tex.Height);
+            return new Rectangle(
+                (int)(Position.X - size.X / 2f),
+                (int)(Position.Y - size.Y / 2f),
+                (int)size.X,
+                (int)size.Y);
+        }
+    }
+
     /// <summary>
     /// This method is called every frame.
     /// </summary>
@@ -70,7 +84,7 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? Assets.Pixel;
-        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, new Vector2((Scale.X * tex.Width) / 2f, (Scale.Y * tex.Height) / 2f), Scale, SpriteEffects.None, LayerDepth);
+        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, new Vector2(tex.Width / 2f, tex.Height / 2f), Scale, SpriteEffects.None, LayerDepth);
     }
 
     /// <summary>
