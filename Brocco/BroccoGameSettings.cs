@@ -34,6 +34,11 @@ public struct BroccoGameSettings
     public Color ClearColor;
 
     /// <summary>
+    /// Whether the game window can be resized by the user or not.
+    /// </summary>
+    public bool CanResize;
+
+    /// <summary>
     /// Creates a <c>BroccoGameSettings</c> instance with default settings.
     /// </summary>
     public BroccoGameSettings()
@@ -43,5 +48,6 @@ public struct BroccoGameSettings
         Resolution = null;
         AssetsDirectory = "Content";
         ClearColor = Color.Black;
+        CanResize = false;
     }
 }

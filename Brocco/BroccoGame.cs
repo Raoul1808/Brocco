@@ -45,6 +45,11 @@ public sealed class BroccoGame : Game
         var sz = settings.Resolution ?? settings.CanvasSize * 2;
         SetResolution(sz.Width, sz.Height);
         _clearColor = settings.ClearColor;
+        Window.AllowUserResizing = settings.CanResize;
+        Window.ClientSizeChanged += (sender, args) =>
+        {
+            SetResolution(Window.ClientBounds.Width, Window.ClientBounds.Height);
+        };
     }
 
     protected override void LoadContent()

@@ -1,4 +1,5 @@
 ﻿using Brocco.Basic;
+using Microsoft.Xna.Framework;
 
 namespace Brocco.Example;
 
@@ -10,6 +11,8 @@ internal class Program
         {
             ShowMouse = true,
             CanvasSize = new Size(384, 216),
+            CanResize = true,
+            ClearColor = Color.CornflowerBlue,
         });
         game.Window.Title = "Example Game Made With Brocco";
         
