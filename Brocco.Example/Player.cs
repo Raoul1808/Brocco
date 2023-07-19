@@ -1,3 +1,4 @@
+using System;
 using Brocco.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -8,14 +9,14 @@ namespace Brocco.Example;
 public class Player : Entity
 {
     private SoundEffect _sound;
-    
+
     public Player()
     {
         CurrentTexture = Assets.GetTexture("PlayerShip");
         _sound = Assets.GetSound("coin");
     }
     
-    public override void Update()
+    public override void Update(float dt)
     {
         Vector2 vel = Vector2.Zero;
         if (InputManager.GetKeyDown(Keys.D) || InputManager.GetButtonDown(Buttons.LeftThumbstickRight))
@@ -35,6 +36,10 @@ public class Player : Entity
         Position += vel;
 
         if (InputManager.GetKeyPress(Keys.Space))
+        {
             _sound.Play();
+            var dot = Scene.AddToScene<Dot>();
+            dot.Position = Position;
+        }
     }
 }

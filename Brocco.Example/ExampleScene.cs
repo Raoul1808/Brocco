@@ -15,7 +15,7 @@ public class ExampleScene : Scene
     
     public override void Load()
     {
-        AddToScene(_player = new Player());
+        _player = AddToScene<Player>();
         _font = Assets.GetFontSystem("Noto Sans");
         _menu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
             .AddButton("New Game")
@@ -25,9 +25,9 @@ public class ExampleScene : Scene
             .Build();
     }
 
-    public override void Update()
+    public override void Update(float dt)
     {
-        base.Update();
+        base.Update(dt);
         _menu.Update();
 
         var keys = InputManager.GetNewKeyPresses();

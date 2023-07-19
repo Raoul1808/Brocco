@@ -51,9 +51,9 @@ public static class SceneManager
             _currentSceneRef = scene;
     }
 
-    internal static void Update()
+    internal static void Update(float dt)
     {
-        _currentSceneRef?.Update();
+        _currentSceneRef?.InternalUpdate(dt);
     }
 
     internal static void CanvasRender(SpriteBatch spriteBatch)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,13 +21,28 @@ public abstract class Scene
     /// </summary>
     public virtual void Load() {}
 
-    /// <summary>
-    /// This method is called every frame.
-    /// </summary>
-    public virtual void Update()
+    internal void InternalUpdate(float dt)
     {
-        foreach (Entity e in _entities)
-            e.Update();
+        for (int i = 0; i < _entities.Count;)
+        {
+            var entity = _entities[i];
+            if (entity.CanDispose)
+            {
+                RemoveFromScene(entity);
+                continue;
+            }
+
+            entity.Update(dt);
+            i++;
+        }
+        Update(dt);
+    }
+
+    /// <summary>
+    /// This method is called every frame. Override this method to add custom scene update logic.
+    /// </summary>
+    public virtual void Update(float dt)
+    {
     }
 
     /// <summary>
@@ -50,10 +66,13 @@ public abstract class Scene
     /// <summary>
     /// Adds an entity to the scene's loop.
     /// </summary>
-    /// <param name="entity">The entity to add</param>
+    /// <typeparam name="T">The entity to add</typeparam>
     /// <returns>The entity added</returns>
-    protected Entity AddToScene(Entity entity)
+    public T AddToScene<T>() where T : Entity
     {
+        var entity = (T)Activator.CreateInstance(typeof(T));
+        // ReSharper disable once PossibleNullReferenceException
+        entity.Scene = this;
         _entities.Add(entity);
         return entity;
     }
@@ -62,7 +81,7 @@ public abstract class Scene
     /// Removes an entity from the scene's loop.
     /// </summary>
     /// <param name="entity">The entity to remove</param>
-    protected void RemoveFromScene(Entity entity)
+    public void RemoveFromScene(Entity entity)
     {
         _entities.Remove(entity);
     }
@@ -71,7 +90,7 @@ public abstract class Scene
     /// Removes an entity from the scene's loop using its ID.
     /// </summary>
     /// <param name="id">The ID of the entity to remove</param>
-    protected void RemoveIdFromScene(int id)
+    public void RemoveIdFromScene(int id)
     {
         _entities.Remove(_entities.Find(e => e.Id == id));
     }

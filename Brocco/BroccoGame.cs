@@ -20,8 +20,6 @@ public sealed class BroccoGame : Game
     private readonly Vector2 _canvasDrawOffset;
     private readonly Color _clearColor;
 
-    public static Texture2D Pixel { get; private set; }
-
     /// <summary>
     /// Creates a Brocco Game Loop with default settings.
     /// </summary>
@@ -63,7 +61,7 @@ public sealed class BroccoGame : Game
     protected override void Update(GameTime gameTime)
     {
         InputManager.Update();
-        SceneManager.Update();
+        SceneManager.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
         base.Update(gameTime);
     }
 
