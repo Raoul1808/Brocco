@@ -1,4 +1,5 @@
 using System;
+using Brocco.Input;
 using Brocco.Menu;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
@@ -28,6 +29,15 @@ public class ExampleScene : Scene
     {
         base.Update();
         _menu.Update();
+
+        var keys = InputManager.GetNewKeyPresses();
+        if (keys.Length > 0)
+        {
+            Console.Write("New presses this frame: ");
+            foreach (var key in keys)
+                Console.Write(key + " ");
+            Console.WriteLine();
+        }
     }
 
     public override void ScreenRender(SpriteBatch spriteBatch)

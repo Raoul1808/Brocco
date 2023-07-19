@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -46,6 +47,12 @@ public static class InputManager
     /// <param name="key">The key to check</param>
     /// <returns>true if the key was just released; false otherwise</returns>
     public static bool GetKeyRelease(Keys key) => _keyboard.IsKeyUp(key) && _oldKeyboard.IsKeyDown(key);
+
+    /// <summary>
+    /// Get an array of all new key presses this frame.
+    /// </summary>
+    /// <returns>An array containing the newly pressed keys</returns>
+    public static Keys[] GetNewKeyPresses() => _keyboard.GetPressedKeys().Except(_oldKeyboard.GetPressedKeys()).ToArray();
 
     /// <summary>
     /// Get if the specified gamepad button was just pressed this frame on any gamepad.
