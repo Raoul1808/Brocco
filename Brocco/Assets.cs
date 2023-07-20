@@ -10,6 +10,12 @@ namespace Brocco;
 
 public static class Assets
 {
+    internal struct FontLoadRequest
+    {
+        public string FontName;
+        public string[] FontFiles;
+    }
+    
     private static ContentManager _content;
     private static GraphicsDevice _graphicsDevice;
 
@@ -22,6 +28,8 @@ public static class Assets
     private static Dictionary<string, SoundEffect> _loadedSounds = new();
     private static Dictionary<string, FontSystem> _loadedFontFamilies = new();
 
+    private static List<FontLoadRequest> _fontsToLoad = new();
+    
     internal static void Prepare(ContentManager content, GraphicsDevice graphicsDevice)
     {
         _content = content;
@@ -77,13 +85,26 @@ public static class Assets
     /// <param name="fontFiles">A collection of paths to the font</param>
     public static void PreloadFont(string fontName, string[] fontFiles)
     {
-        FontSystem font = new();
-        foreach (string file in fontFiles)
+        _fontsToLoad.Add(new FontLoadRequest
         {
-            var path = Path.Join(_content.RootDirectory, file);
-            font.AddFont(File.ReadAllBytes(path));
+            FontName = fontName,
+            FontFiles = fontFiles,
+        });
+    }
+
+    internal static void LoadFonts()
+    {
+        foreach (var fontToLoad in _fontsToLoad)
+        {
+            FontSystem font = new();
+            foreach (string file in fontToLoad.FontFiles)
+            {
+                var path = Path.Join(_content.RootDirectory, file);
+                font.AddFont(File.ReadAllBytes(path));
+            }
+
+            _loadedFontFamilies.Add(fontToLoad.FontName, font);
         }
-        _loadedFontFamilies.Add(fontName, font);
     }
 
     public static FontSystem GetFontSystem(string fontName)

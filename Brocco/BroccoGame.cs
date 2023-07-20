@@ -48,13 +48,14 @@ public sealed class BroccoGame : Game
         {
             SetResolution(Window.ClientBounds.Width, Window.ClientBounds.Height);
         };
-        Assets.Prepare(Content, GraphicsDevice);
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.Width, _canvasSize.Height);
+        Assets.Prepare(Content, GraphicsDevice);
+        Assets.LoadFonts();
         SceneManager.LoadScenes();
     }
 
