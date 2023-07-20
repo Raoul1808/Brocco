@@ -84,6 +84,14 @@ public abstract class Entity
     public abstract void Update(float dt);
 
     /// <summary>
+    /// This method runs when this entity collides with another entity. Override this to handle collision.
+    /// </summary>
+    /// <param name="other">The other collided entity</param>
+    public virtual void CollidedWith(Entity other)
+    {
+    }
+
+    /// <summary>
     /// This method renders your entity and is called every frame. Override this to change the rendering code.
     /// </summary>
     /// <param name="spriteBatch">The <c>SpriteBatch</c> instance used in the Brocco Game Loop</param>

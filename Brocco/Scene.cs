@@ -23,6 +23,7 @@ public abstract class Scene
 
     internal void InternalUpdate(float dt)
     {
+        Entity firstEntity = null;
         for (int i = 0; i < _entities.Count;)
         {
             var entity = _entities[i];
@@ -34,7 +35,19 @@ public abstract class Scene
 
             entity.Update(dt);
             i++;
+            if (firstEntity == null)
+            {
+                firstEntity = entity;
+                continue;
+            }
+
+            if (firstEntity.BoundingBox.Intersects(entity.BoundingBox))
+            {
+                firstEntity.CollidedWith(entity);
+                entity.CollidedWith(firstEntity);
+            }
         }
+        
         Update(dt);
     }
 
