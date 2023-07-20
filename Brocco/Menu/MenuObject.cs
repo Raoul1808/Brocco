@@ -43,14 +43,14 @@ public class MenuObject
     /// </summary>
     public void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Up))
+        if (InputManager.GetKeyPress(Keys.Up) || InputManager.GetButtonPress(Buttons.LeftThumbstickUp) || InputManager.GetButtonPress(Buttons.DPadUp))
         {
             _currentOption--;
             if (_currentOption < 0)
                 _currentOption = _entries.Count - 1;
         }
 
-        if (InputManager.GetKeyPress(Keys.Down))
+        if (InputManager.GetKeyPress(Keys.Down) || InputManager.GetButtonPress(Buttons.LeftThumbstickDown) || InputManager.GetButtonPress(Buttons.DPadDown))
         {
             _currentOption++;
             if (_currentOption >= _entries.Count)

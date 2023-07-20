@@ -42,7 +42,7 @@ public sealed class MenuToggle : MenuEntry
 
     public override void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Enter))
+        if (InputManager.GetKeyPress(Keys.Enter) || InputManager.GetKeyPress(Keys.Space) || InputManager.GetButtonPress(Buttons.A))
         {
             IsChecked = !IsChecked;
             OnTogglePress?.Invoke(this, IsChecked);
@@ -72,7 +72,7 @@ public sealed class MenuArraySelect<T> : MenuEntry
 
     public override void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Left))
+        if (InputManager.GetKeyPress(Keys.Left) || InputManager.GetButtonPress(Buttons.LeftThumbstickLeft) || InputManager.GetButtonPress(Buttons.DPadLeft))
         {
             CurrentOption--;
             if (CurrentOption < 0)
@@ -80,7 +80,7 @@ public sealed class MenuArraySelect<T> : MenuEntry
             OnMenuArraySelectChange?.Invoke(this, SelectOptions[CurrentOption]);
         }
 
-        if (InputManager.GetKeyPress(Keys.Right))
+        if (InputManager.GetKeyPress(Keys.Right) || InputManager.GetButtonPress(Buttons.LeftThumbstickRight) || InputManager.GetButtonPress(Buttons.DPadRight))
         {
             CurrentOption++;
             if (CurrentOption >= SelectOptions.Length)
