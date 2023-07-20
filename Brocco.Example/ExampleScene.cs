@@ -4,6 +4,7 @@ using Brocco.Menu;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Brocco.Example;
 
@@ -11,24 +12,27 @@ public class ExampleScene : Scene
 {
     private Player _player;
     private FontSystem _font;
-    private MenuObject _menu;
+    private MenuObject _pauseMenu;
     
     public override void Load()
     {
         _player = AddToScene<Player>();
         _font = Assets.GetFontSystem("Noto Sans");
-        _menu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
-            .AddButton("New Game")
-            .AddToggle("Is This a Toggle?")
-            .AddArraySelect("Select between these meme numbers", new int[] { 69, 420, 727, 1116 })
-            .AddButton("Exit", _ => {Console.WriteLine("Sorry but there is no escape");})
+        _pauseMenu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
+            .AddButton("Resume", sender => { PauseUpdate = false; })
+            .AddButton("Exit")
             .Build();
     }
 
     public override void Update(float dt)
     {
         base.Update(dt);
-        _menu.Update();
+        if (InputManager.GetKeyPress(Keys.Escape))
+            PauseUpdate = true;
+        if (PauseUpdate)
+        {
+            _pauseMenu.Update();
+        }
 
         var keys = InputManager.GetNewKeyPresses();
         if (keys.Length > 0)
@@ -42,6 +46,7 @@ public class ExampleScene : Scene
 
     public override void ScreenRender(SpriteBatch spriteBatch)
     {
-        _menu.Render(spriteBatch);
+        if (PauseUpdate)
+            _pauseMenu.Render(spriteBatch);
     }
 }

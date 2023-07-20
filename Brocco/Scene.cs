@@ -15,6 +15,11 @@ public abstract class Scene
     /// Used internally, determines if the scene was loaded before or not.
     /// </summary>
     public bool Loaded { get; internal set; }
+    
+    /// <summary>
+    /// Determines whether the game should run internal updates or not.
+    /// </summary>
+    public bool PauseUpdate { get; set; }
 
     /// <summary>
     /// Override this if you want to load certain assets for certain entities.
@@ -23,6 +28,12 @@ public abstract class Scene
 
     internal void InternalUpdate(float dt)
     {
+        if (PauseUpdate)
+        {
+            Update(dt);
+            return;
+        }
+        
         Entity firstEntity = null;
         for (int i = 0; i < _entities.Count;)
         {
