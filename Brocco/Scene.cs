@@ -84,7 +84,11 @@ public abstract class Scene
     public T AddToScene<T>() where T : Entity
     {
         var entity = (T)Activator.CreateInstance(typeof(T));
-        // ReSharper disable once PossibleNullReferenceException
+        return (T) AddToScene(entity);
+    }
+
+    public Entity AddToScene(Entity entity)
+    {
         entity.Scene = this;
         _entities.Add(entity);
         return entity;
