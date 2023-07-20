@@ -54,6 +54,11 @@ public abstract class Entity
     public float LayerDepth = 1f;
 
     /// <summary>
+    /// This entity's anchor point. Defaults to Middle Center. Used for rendering and bounding box calculation.
+    /// </summary>
+    public Anchor Anchor = Anchor.MiddleCenter;
+
+    /// <summary>
     /// This entity's current scene.
     /// </summary>
     public Scene Scene { get; internal set; }
@@ -64,9 +69,10 @@ public abstract class Entity
         {
             var tex = CurrentTexture ?? Assets.Pixel;
             var size = new Vector2(Scale.X * tex.Width, Scale.Y * tex.Height);
+            var offset = Anchor.ToVector2() * size;
             return new Rectangle(
-                (int)(Position.X - size.X / 2f),
-                (int)(Position.Y - size.Y / 2f),
+                (int)(Position.X - offset.X),
+                (int)(Position.Y - offset.Y),
                 (int)size.X,
                 (int)size.Y);
         }
@@ -84,7 +90,10 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? Assets.Pixel;
-        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, new Vector2(tex.Width / 2f, tex.Height / 2f), Scale, SpriteEffects.None, LayerDepth);
+        var offset = Anchor.ToVector2();
+        offset.X *= tex.Width;
+        offset.Y *= tex.Height;
+        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, offset, Scale, SpriteEffects.None, LayerDepth);
     }
 
     /// <summary>
