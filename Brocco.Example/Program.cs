@@ -16,7 +16,7 @@ internal class Program
         });
         game.Window.Title = "Example Game Made With Brocco";
         
-        Assets.PreloadFont("Noto Sans", new[] {"Content/NotoSans-Medium.ttf"});
+        Assets.PreloadFont("Noto Sans", new[] {"NotoSans-Medium.ttf"});
 
         SceneManager.Add("Example Scene", new ExampleScene());
         
