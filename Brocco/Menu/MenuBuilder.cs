@@ -13,7 +13,6 @@ public class MenuBuilder
     private Vector2 _startingPosition;
     private FontSystem _font;
     private MenuSettings _menuSettings;
-    private float _maxLength;
 
     private MenuBuilder(FontSystem font, Vector2 position, MenuSettings settings)
     {

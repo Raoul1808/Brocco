@@ -35,7 +35,7 @@ public struct Size : IEquatable<Size>
         Height = point.Y;
     }
     
-    public bool Equals([NotNull] Size other)
+    public bool Equals(Size other)
     {
         return this.Width == other.Width &&
                this.Height == other.Height;

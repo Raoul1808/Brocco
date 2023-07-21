@@ -99,7 +99,7 @@ public static class Assets
             FontSystem font = new();
             foreach (string file in fontToLoad.FontFiles)
             {
-                var path = Path.Join(_content.RootDirectory, file);
+                string path = Path.Join(_content.RootDirectory, file);
                 font.AddFont(File.ReadAllBytes(path));
             }
 

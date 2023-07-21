@@ -51,7 +51,7 @@ public sealed class MenuToggle : MenuEntry
 
     public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
     {
-        var text = Label + ": " + IsChecked;
+        string text = Label + ": " + IsChecked;
         var f = font.GetFont(FontSize);
         var length = f.MeasureString(text);
         length.Y = FontSize;
@@ -94,12 +94,12 @@ public sealed class MenuArraySelect<T> : MenuEntry
             _precalculatedOptionSizes[i] = l;
         }
         
-        var text = Label + "  < " + longestOption + " >";
-        var finalLength = f.MeasureString(text).X;
-        var labelLength = f.MeasureString(Label).X;
-        var doubleSpace = f.MeasureString("  ").X;
-        var singleSpace = f.MeasureString(" ").X;
-        var arrowLeftLength = f.MeasureString("<").X;
+        string text = Label + "  < " + longestOption + " >";
+        float finalLength = f.MeasureString(text).X;
+        float labelLength = f.MeasureString(Label).X;
+        float doubleSpace = f.MeasureString("  ").X;
+        float singleSpace = f.MeasureString(" ").X;
+        float arrowLeftLength = f.MeasureString("<").X;
         
         _startingOffset = new Vector2(-finalLength * 0.5f, 0);
         _arrowLeftOffset = new Vector2(_startingOffset.X + labelLength + doubleSpace, 0);
