@@ -100,6 +100,11 @@ public abstract class Scene
         return (T) AddToScene(entity);
     }
 
+    /// <summary>
+    /// Adds an entity to the scene's loop.
+    /// </summary>
+    /// <param name="entity">The entity to add</param>
+    /// <returns>The entity added</returns>
     public Entity AddToScene(Entity entity)
     {
         entity.Scene = this;
