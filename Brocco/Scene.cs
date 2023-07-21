@@ -34,7 +34,6 @@ public abstract class Scene
             return;
         }
         
-        Entity firstEntity = null;
         for (int i = 0; i < _entities.Count;)
         {
             var entity = _entities[i];
@@ -46,19 +45,20 @@ public abstract class Scene
 
             entity.Update(dt);
             i++;
-            if (firstEntity == null)
-            {
-                firstEntity = entity;
-                continue;
-            }
+        }
 
-            if (firstEntity.BoundingBox.Intersects(entity.BoundingBox))
+        // TODO: look into QuadTree solution
+        foreach (Entity firstEntity in _entities)
+        {
+            foreach (Entity secondEntity in _entities)
             {
-                firstEntity.CollidedWith(entity);
-                entity.CollidedWith(firstEntity);
+                if (firstEntity.Id == secondEntity.Id)
+                    continue;
+                if (firstEntity.BoundingBox.Intersects(secondEntity.BoundingBox))
+                    firstEntity.CollidedWith(secondEntity);
             }
         }
-        
+
         Update(dt);
     }
 
