@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -71,10 +72,10 @@ public abstract class Entity
             var size = new Vector2(Scale.X * tex.Width, Scale.Y * tex.Height);
             var offset = Anchor.ToVector2() * size;
             return new Rectangle(
-                (int)(Position.X - offset.X),
-                (int)(Position.Y - offset.Y),
-                (int)size.X,
-                (int)size.Y);
+                (int)Math.Round(Position.X - offset.X),
+                (int)Math.Round(Position.Y - offset.Y),
+                (int)Math.Round(size.X),
+                (int)Math.Round(size.Y));
         }
     }
 
@@ -102,6 +103,7 @@ public abstract class Entity
         offset.X *= tex.Width;
         offset.Y *= tex.Height;
         spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, offset, Scale, SpriteEffects.None, LayerDepth);
+        spriteBatch.Draw(Assets.Pixel, BoundingBox, Color.Green * 0.33f);
     }
 
     /// <summary>
