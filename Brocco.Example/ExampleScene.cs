@@ -20,6 +20,8 @@ public class ExampleScene : Scene
         _font = Assets.GetFontSystem("Noto Sans");
         _pauseMenu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
             .AddButton("Resume", sender => { PauseUpdate = false; })
+            .AddToggle("Yes")
+            .AddArraySelect("I am", new [] {"Raoul1808", "Mew", "Both"})
             .AddButton("Exit")
             .Build();
     }
@@ -28,7 +30,7 @@ public class ExampleScene : Scene
     {
         base.Update(dt);
         if (InputManager.GetKeyPress(Keys.Escape))
-            PauseUpdate = true;
+            PauseUpdate = !PauseUpdate;
         if (PauseUpdate)
         {
             _pauseMenu.Update();

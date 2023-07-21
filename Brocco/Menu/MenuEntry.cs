@@ -65,10 +65,47 @@ public sealed class MenuToggle : MenuEntry
 
 public sealed class MenuArraySelect<T> : MenuEntry
 {
-    public T[] SelectOptions { get; set; }
+    public T[] SelectOptions { get; init; }
     public int CurrentOption { get; private set; }
 
-    private float _longestStringLength = 0f;
+    private float[] _precalculatedOptionSizes;
+
+    private Vector2 _startingOffset;
+    private Vector2 _arrowLeftOffset;
+    private Vector2 _optionOffset;
+    private Vector2 _arrowRightOffset;
+
+    public void PrecalculateOffsets(FontSystem font)
+    {
+        var f = font.GetFont(FontSize);
+        string longestOption = "";
+        float longestStringLength = 0f;
+        _precalculatedOptionSizes = new float[SelectOptions.Length];
+        for (int i = 0; i < SelectOptions.Length; i++)
+        {
+            var elem = SelectOptions[i];
+            var l = f.MeasureString(elem.ToString()).X;
+            if (l > longestStringLength)
+            {
+                longestStringLength = l;
+                longestOption = elem.ToString();
+            }
+
+            _precalculatedOptionSizes[i] = l;
+        }
+        
+        var text = Label + "  < " + longestOption + " >";
+        var finalLength = f.MeasureString(text).X;
+        var labelLength = f.MeasureString(Label).X;
+        var doubleSpace = f.MeasureString("  ").X;
+        var singleSpace = f.MeasureString(" ").X;
+        var arrowLeftLength = f.MeasureString("<").X;
+        
+        _startingOffset = new Vector2(-finalLength * 0.5f, 0);
+        _arrowLeftOffset = new Vector2(_startingOffset.X + labelLength + doubleSpace, 0);
+        _optionOffset = new Vector2(_arrowLeftOffset.X + arrowLeftLength + singleSpace + longestStringLength * 0.5f, 0);
+        _arrowRightOffset = new Vector2(_optionOffset.X + longestStringLength * 0.5f + singleSpace, 0);
+    }
 
     public override void Update()
     {
@@ -91,11 +128,12 @@ public sealed class MenuArraySelect<T> : MenuEntry
 
     public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
     {
-        var text = Label + "  < " + SelectOptions[CurrentOption] + " >";
         var f = font.GetFont(FontSize);
-        var length = f.MeasureString(text);
-        length.Y = FontSize;
-        spriteBatch.DrawString(font.GetFont(FontSize), text, position, color, origin: length * 0.5f);
+        float currentOptionSize = _precalculatedOptionSizes[CurrentOption];
+        spriteBatch.DrawString(f, Label, position + _startingOffset, color, origin: new Vector2(0, FontSize) * 0.5f);
+        spriteBatch.DrawString(f, "<", position + _arrowLeftOffset, color, origin: new Vector2(0, FontSize) * 0.5f);
+        spriteBatch.DrawString(f, SelectOptions[CurrentOption].ToString(), position + _optionOffset, color, origin: new Vector2(currentOptionSize, FontSize) * 0.5f);
+        spriteBatch.DrawString(f, ">", position + _arrowRightOffset, color, origin: new Vector2(0, FontSize) * 0.5f);
     }
 
     public delegate void MenuArraySelectChange(MenuArraySelect<T> sender, T selectedOption);

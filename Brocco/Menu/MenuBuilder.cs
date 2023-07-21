@@ -12,13 +12,14 @@ public class MenuBuilder
     private List<MenuEntry> _menuEntries = new();
     private Vector2 _startingPosition;
     private FontSystem _font;
-    private float _fontSize;
-    
-    private MenuBuilder(FontSystem font, Vector2 position, float fontSize)
+    private MenuSettings _menuSettings;
+    private float _maxLength;
+
+    private MenuBuilder(FontSystem font, Vector2 position, MenuSettings settings)
     {
         _font = font;
         _startingPosition = position;
-        _fontSize = fontSize;
+        _menuSettings = settings;
     }
 
     /// <summary>
@@ -26,11 +27,11 @@ public class MenuBuilder
     /// </summary>
     /// <param name="font">The font to use for the menu</param>
     /// <param name="position">The starting position of the menu</param>
-    /// <param name="fontSize">The font size of the menu's text</param>
+    /// <param name="settings">The menu's settings</param>
     /// <returns>A new <c>MenuBuilder</c> instance</returns>
-    public static MenuBuilder CreateMenu(FontSystem font, Vector2 position, float fontSize = 32f)
+    public static MenuBuilder CreateMenu(FontSystem font, Vector2 position, MenuSettings? settings = null)
     {
-        return new MenuBuilder(font, position, fontSize);
+        return new MenuBuilder(font, position, settings ?? new ());
     }
 
     /// <summary>
@@ -44,7 +45,7 @@ public class MenuBuilder
         var entry = new MenuButton
         {
             Label = name,
-            FontSize = _fontSize,
+            FontSize = _menuSettings.FontSize,
         };
         if (action is not null)
             entry.OnButtonPress += action;
@@ -63,7 +64,7 @@ public class MenuBuilder
         var entry = new MenuToggle
         {
             Label = name,
-            FontSize = _fontSize,
+            FontSize = _menuSettings.FontSize,
         };
         if (action is not null)
             entry.OnTogglePress += action;
@@ -84,9 +85,10 @@ public class MenuBuilder
         var entry = new MenuArraySelect<T>()
         {
             Label = name,
-            FontSize = _fontSize,
+            FontSize = _menuSettings.FontSize,
             SelectOptions = selections,
         };
+        entry.PrecalculateOffsets(_font);
         if (action is not null)
             entry.OnMenuArraySelectChange += action;
         _menuEntries.Add(entry);
