@@ -65,4 +65,6 @@ public static class SceneManager
     {
         _currentSceneRef?.ScreenRender(spriteBatch);
     }
+
+    internal static bool ReceivedStop() => _currentSceneRef?.StoppedGame ?? false;
 }

@@ -11,6 +11,8 @@ public abstract class Scene
 {
     private List<Entity> _entities = new();
 
+    internal bool StoppedGame { get; private set; }
+
     /// <summary>
     /// Used internally, determines if the scene was loaded before or not.
     /// </summary>
@@ -129,5 +131,13 @@ public abstract class Scene
     protected void ClearEntities()
     {
         _entities.Clear();
+    }
+
+    /// <summary>
+    /// Call this to stop the game loop.
+    /// </summary>
+    public void ExitGame()
+    {
+        StoppedGame = true;
     }
 }

@@ -22,7 +22,7 @@ public class ExampleScene : Scene
             .AddButton("Resume", sender => { PauseUpdate = false; })
             .AddToggle("Yes")
             .AddArraySelect("I am", new [] {"Raoul1808", "Mew", "Both"})
-            .AddButton("Exit")
+            .AddButton("Exit", sender => {ExitGame();})
             .Build();
     }
 

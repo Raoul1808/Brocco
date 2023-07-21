@@ -3,6 +3,7 @@ using Brocco.Basic;
 using Brocco.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SDL2;
 
 namespace Brocco;
 
@@ -61,6 +62,8 @@ public sealed class BroccoGame : Game
 
     protected override void Update(GameTime gameTime)
     {
+        if (SceneManager.ReceivedStop())
+            Exit();
         InputManager.Update();
         SceneManager.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
         base.Update(gameTime);
