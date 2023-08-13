@@ -36,6 +36,13 @@ public class ExampleScene : Scene
             _pauseMenu.Update();
         }
 
+        if (InputManager.GetClickDown(MouseButtons.Left))
+        {
+            Vector2 pos = InputManager.GetCanvasMousePosition();
+            _player.Position = pos;
+            Console.WriteLine(pos);
+        }
+
         var keys = InputManager.GetNewKeyPresses();
         if (keys.Length > 0)
         {

@@ -100,5 +100,6 @@ public sealed class BroccoGame : Game
 
         _screenCenter = new Vector2(width / 2f, height / 2f);
         _canvasRenderScale = Math.Min(width / (float)_canvasSize.Width, height / (float)_canvasSize.Height);
+        InputManager.CanvasRenderScale = _canvasRenderScale;
     }
 }

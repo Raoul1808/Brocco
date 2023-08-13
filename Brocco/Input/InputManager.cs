@@ -1,4 +1,5 @@
 using System.Linq;
+using Brocco.Basic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -13,14 +14,19 @@ public static class InputManager
     public const int GAMEPADS = 4;
     
     private static KeyboardState _oldKeyboard, _keyboard;
+    private static MouseState _oldMouse, _mouse;
     private static GamePadState[] _oldGamepads = new GamePadState[GAMEPADS], _gamepads = new GamePadState[GAMEPADS];
+
+    internal static float CanvasRenderScale;
 
     internal static void Update()
     {
         _oldKeyboard = _keyboard;
-        _gamepads.CopyTo(_oldGamepads, 0); 
+        _oldMouse = _mouse;
+        _gamepads.CopyTo(_oldGamepads, 0);
 
         _keyboard = Keyboard.GetState();
+        _mouse = Mouse.GetState();
         for (int i = 0; i < GAMEPADS; i++)
         {
             _gamepads[i] = GamePad.GetState((PlayerIndex)i);
@@ -149,4 +155,37 @@ public static class InputManager
     /// <param name="index">The gamepad index to check</param>
     /// <returns>true if the button was just released; false otherwise</returns>
     public static bool GetButtonRelease(Buttons button, PlayerIndex index) => GetButtonRelease(button, (int)index);
+
+    /// <summary>
+    /// Get if the specified mouse button was just pressed this frame.
+    /// </summary>
+    /// <param name="button">The mouse button to check</param>
+    /// <returns>true if the button was just pressed; false otherwise</returns>
+    public static bool GetClickPress(MouseButtons button) => _mouse.IsButtonDown(button) && _oldMouse.IsButtonUp(button);
+
+    /// <summary>
+    /// Get if the specified mouse button is held down this frame.
+    /// </summary>
+    /// <param name="button">The mouse button to check</param>
+    /// <returns>true if the button is currently down; false otherwise</returns>
+    public static bool GetClickDown(MouseButtons button) => _mouse.IsButtonDown(button);
+
+    /// <summary>
+    /// Get if the specified mouse button was just released this frame.
+    /// </summary>
+    /// <param name="button">The mouse button to check</param>
+    /// <returns>true if the button was just released; false otherwise</returns>
+    public static bool GetClickRelease(MouseButtons button) =>_mouse.IsButtonUp(button) && _oldMouse.IsButtonDown(button);
+
+    /// <summary>
+    /// Get the current mouse position on the canvas.
+    /// </summary>
+    /// <returns>The relative mouse position on the canvas.</returns>
+    public static Vector2 GetCanvasMousePosition() => new Vector2(_mouse.X, _mouse.Y) / CanvasRenderScale;
+
+    /// <summary>
+    /// Get the current mouse on the window relative to the top-right corner.
+    /// </summary>
+    /// <returns>The absolute mouse position on the window.</returns>
+    public static Point GetMousePosition() => new Point(_mouse.X, _mouse.Y);
 }
