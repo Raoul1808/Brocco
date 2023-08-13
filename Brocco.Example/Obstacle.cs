@@ -8,7 +8,7 @@ public class Obstacle : Entity
     {
         Color = Color.Black;
         Position = new Vector2(100, 100);
-        Scale = new Vector2(25, 25);
+        Scale = new Vector2(100, 100);
     }
     
     public override void Update(float dt)
