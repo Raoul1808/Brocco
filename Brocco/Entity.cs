@@ -99,10 +99,7 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? Assets.Pixel;
-        var offset = Anchor.ToVector2();
-        offset.X *= tex.Width;
-        offset.Y *= tex.Height;
-        spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, offset, Scale, SpriteEffects.None, LayerDepth);
+        spriteBatch.Draw(tex, BoundingBox, null, Color * Alpha, Rotation, Vector2.Zero, SpriteEffects.None, LayerDepth);
     }
 
     /// <summary>
