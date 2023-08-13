@@ -24,6 +24,11 @@ public abstract class Entity
     public Vector2 Position = Vector2.Zero;
 
     /// <summary>
+    /// This entity's current velocity. Mainly used for AABB collision checking.
+    /// </summary>
+    public Vector2 Velocity = Vector2.Zero;
+
+    /// <summary>
     /// This entity's current color. Mainly used for rendering.
     /// </summary>
     public Color Color = Color.White;
@@ -83,14 +88,6 @@ public abstract class Entity
     /// This method is called every frame.
     /// </summary>
     public abstract void Update(float dt);
-
-    /// <summary>
-    /// This method runs when this entity collides with another entity. Override this to handle collision.
-    /// </summary>
-    /// <param name="other">The other collided entity</param>
-    public virtual void CollidedWith(Entity other)
-    {
-    }
 
     /// <summary>
     /// This method renders your entity and is called every frame. Override this to change the rendering code.

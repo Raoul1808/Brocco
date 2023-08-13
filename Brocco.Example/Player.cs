@@ -1,4 +1,3 @@
-using System;
 using Brocco.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -33,13 +32,39 @@ public class Player : Entity
 
         vel *= 2f;
 
-        Position += vel;
+        Velocity = vel;
+    }
 
-        if (InputManager.GetKeyPress(Keys.Space))
+    public void CollidedWith(Entity other)
+    {
+        if (other.GetType() != typeof(Obstacle))
+            return;
+
+        float halfHeight = BoundingBox.Height * 0.5f;
+        float halfWidth = BoundingBox.Width * 0.5f;
+        
+        if (this.TouchedBottomOf(other))
         {
-            _sound.Play();
-            var dot = Scene.AddToScene<Dot>();
-            dot.Position = Position;
+            Position.Y = other.BoundingBox.Bottom + halfHeight;
+            Velocity.Y = 0;
+        }
+
+        if (this.TouchedTopOf(other))
+        {
+            Position.Y = other.BoundingBox.Top - halfHeight;
+            Velocity.Y = 0;
+        }
+
+        if (this.TouchedLeftOf(other))
+        {
+            Position.X = other.BoundingBox.Left - halfWidth;
+            Velocity.X = 0;
+        }
+
+        if (this.TouchedRightOf(other))
+        {
+            Position.X = other.BoundingBox.Right + halfWidth;
+            Velocity.X = 0;
         }
     }
 }

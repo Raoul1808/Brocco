@@ -11,11 +11,13 @@ namespace Brocco.Example;
 public class ExampleScene : Scene
 {
     private Player _player;
+    private Obstacle _obstacle;
     private FontSystem _font;
     private MenuObject _pauseMenu;
     
     public override void Load()
     {
+        _obstacle = AddToScene<Obstacle>();
         _player = AddToScene<Player>();
         _font = Assets.GetFontSystem("Noto Sans");
         _pauseMenu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
@@ -35,6 +37,8 @@ public class ExampleScene : Scene
         {
             _pauseMenu.Update();
         }
+        
+        _player.CollidedWith(_obstacle);
 
         if (InputManager.GetClickDown(MouseButtons.Left))
         {

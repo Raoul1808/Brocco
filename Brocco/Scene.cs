@@ -46,19 +46,8 @@ public abstract class Scene
             }
 
             entity.Update(dt);
+            entity.Position += entity.Velocity;
             i++;
-        }
-
-        // TODO: look into QuadTree solution
-        foreach (Entity firstEntity in _entities)
-        {
-            foreach (Entity secondEntity in _entities)
-            {
-                if (firstEntity.Id == secondEntity.Id)
-                    continue;
-                if (firstEntity.BoundingBox.Intersects(secondEntity.BoundingBox))
-                    firstEntity.CollidedWith(secondEntity);
-            }
         }
 
         Update(dt);
