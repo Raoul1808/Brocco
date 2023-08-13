@@ -103,7 +103,6 @@ public abstract class Entity
         offset.X *= tex.Width;
         offset.Y *= tex.Height;
         spriteBatch.Draw(tex, Position, null, Color * Alpha, Rotation, offset, Scale, SpriteEffects.None, LayerDepth);
-        spriteBatch.Draw(Assets.Pixel, BoundingBox, Color.Green * 0.33f);
     }
 
     /// <summary>
