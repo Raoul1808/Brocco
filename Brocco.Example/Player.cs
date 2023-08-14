@@ -43,29 +43,30 @@ public class Player : Entity
         float halfHeight = BoundingBox.Height * 0.5f;
         float halfWidth = BoundingBox.Width * 0.5f;
         
-        // For some reason this is totally borked and I have no idea why, but it seems to play nice with platformer physics so I'll go with it.
-        if (this.TouchedLeftOf(other))
-        {
-            Position.X = other.BoundingBox.Left - halfWidth;
-            Velocity.X = 0;
-        }
-
-        if (this.TouchedRightOf(other))
-        {
-            Position.X = other.BoundingBox.Right + halfWidth;
-            Velocity.X = 0;
-        }
-        
-        if (this.TouchedBottomOf(other))
-        {
-            Position.Y = other.BoundingBox.Bottom + halfHeight;
-            Velocity.Y = 0;
-        }
-
-        if (this.TouchedTopOf(other))
-        {
-            Position.Y = other.BoundingBox.Top - halfHeight;
-            Velocity.Y = 0;
-        }
+        // TODO: Implement better collision detection
+        // // For some reason this is totally borked and I have no idea why, but it seems to play nice with platformer physics so I'll go with it.
+        // if (this.TouchedLeftOf(other))
+        // {
+        //     Position.X = other.BoundingBox.Left - halfWidth;
+        //     Velocity.X = 0;
+        // }
+        //
+        // if (this.TouchedRightOf(other))
+        // {
+        //     Position.X = other.BoundingBox.Right + halfWidth;
+        //     Velocity.X = 0;
+        // }
+        //
+        // if (this.TouchedBottomOf(other))
+        // {
+        //     Position.Y = other.BoundingBox.Bottom + halfHeight;
+        //     Velocity.Y = 0;
+        // }
+        //
+        // if (this.TouchedTopOf(other))
+        // {
+        //     Position.Y = other.BoundingBox.Top - halfHeight;
+        //     Velocity.Y = 0;
+        // }
     }
 }
