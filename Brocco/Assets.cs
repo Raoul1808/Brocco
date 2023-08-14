@@ -27,6 +27,7 @@ public static class Assets
     private static Dictionary<string, Texture2D> _loadedTextures = new();
     private static Dictionary<string, SoundEffect> _loadedSounds = new();
     private static Dictionary<string, FontSystem> _loadedFontFamilies = new();
+    private static Dictionary<string, Effect> _loadedEffects = new();
 
     private static List<FontLoadRequest> _fontsToLoad = new();
     
@@ -110,5 +111,25 @@ public static class Assets
     public static FontSystem GetFontSystem(string fontName)
     {
         return _loadedFontFamilies[fontName];
+    }
+
+    /// <summary>
+    /// Gets a shader effect corresponding to the requested name. If the shader effect isn't already loaded, it will be cached when calling this method.
+    /// </summary>
+    /// <param name="effectName">The effect to load/get</param>
+    /// <returns>The asset requested, or null if not found.</returns>
+    public static Effect GetEffect(string effectName)
+    {
+        if (_loadedEffects.TryGetValue(effectName, out var effect)) return effect;
+        try
+        {
+            effect = _content.Load<Effect>(effectName);
+            _loadedEffects.Add(effectName, effect);
+            return effect;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

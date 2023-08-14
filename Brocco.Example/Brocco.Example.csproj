@@ -19,6 +19,13 @@
       <None Update="Content\NotoSans-Medium.ttf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Content\TestShader.fxb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Shaders\TestShader.fx" />
     </ItemGroup>
 
 </Project>

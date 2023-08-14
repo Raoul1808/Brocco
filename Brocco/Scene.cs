@@ -24,6 +24,16 @@ public abstract class Scene
     public bool PauseUpdate { get; set; }
 
     /// <summary>
+    /// The current canvas shader effect. Set to null to remove the shader.
+    /// </summary>
+    public Effect CanvasEffect { get; set; } = null;
+
+    /// <summary>
+    /// The current screen shader effect. Set to null to remove the shader.
+    /// </summary>
+    public Effect ScreenEffect { get; set; } = null;
+
+    /// <summary>
     /// Override this if you want to load certain assets for certain entities.
     /// </summary>
     public virtual void Load() {}

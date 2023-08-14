@@ -17,6 +17,8 @@ public class ExampleScene : Scene
     
     public override void Load()
     {
+        CanvasEffect = Assets.GetEffect("TestShader");
+        
         _obstacle = AddToScene<Obstacle>();
         _player = AddToScene<Player>();
         _font = Assets.GetFontSystem("Noto Sans");
