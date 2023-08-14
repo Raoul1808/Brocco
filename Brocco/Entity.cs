@@ -69,19 +69,18 @@ public abstract class Entity
     /// </summary>
     public Scene Scene { get; internal set; }
 
-    public Rectangle BoundingBox
+    public Rectangle BoundingBox => GetBoundingBoxWithOffset(Vector2.Zero);
+
+    public Rectangle GetBoundingBoxWithOffset(Vector2 offset)
     {
-        get
-        {
-            var tex = CurrentTexture ?? Assets.Pixel;
-            var size = new Vector2(Scale.X * tex.Width, Scale.Y * tex.Height);
-            var offset = Anchor.ToVector2() * size;
-            return new Rectangle(
-                (int)Math.Round(Position.X - offset.X),
-                (int)Math.Round(Position.Y - offset.Y),
-                (int)Math.Round(size.X),
-                (int)Math.Round(size.Y));
-        }
+        var tex = CurrentTexture ?? Assets.Pixel;
+        var size = new Vector2(Scale.X * tex.Width, Scale.Y * tex.Height);
+        var anchorOffset = Anchor.ToVector2() * size;
+        return new Rectangle(
+            (int)Math.Round(Position.X + offset.X - anchorOffset.X),
+            (int)Math.Round(Position.Y + offset.Y - anchorOffset.Y),
+            (int)Math.Round(size.X),
+            (int)Math.Round(size.Y));
     }
 
     /// <summary>
