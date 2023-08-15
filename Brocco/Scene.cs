@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Brocco;
@@ -32,6 +33,11 @@ public abstract class Scene
     /// The current screen shader effect. Set to null to remove the shader.
     /// </summary>
     public Effect ScreenEffect { get; set; } = null;
+
+    /// <summary>
+    /// The scene's clear color. If this is set to null, the game's default clear color is used instead.
+    /// </summary>
+    public Color? ClearColor { get; set; } = null;
 
     /// <summary>
     /// Override this if you want to load certain assets for certain entities.

@@ -71,7 +71,7 @@ public sealed class BroccoGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.SetRenderTarget(_canvas);
-        GraphicsDevice.Clear(_clearColor);
+        GraphicsDevice.Clear(SceneManager.GetClearColor() ?? _clearColor);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         SceneManager.CanvasRender(_spriteBatch);
         _spriteBatch.End();

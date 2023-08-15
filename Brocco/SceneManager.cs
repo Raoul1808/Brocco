@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Brocco;
@@ -74,6 +75,8 @@ public static class SceneManager
     internal static Effect GetCanvasEffect() => _currentSceneRef?.CanvasEffect ?? null;
     
     internal static Effect GetScreenEffect() => _currentSceneRef?.ScreenEffect ?? null;
+
+    internal static Color? GetClearColor() => _currentSceneRef?.ClearColor;
 
     internal static bool ReceivedStop() => _currentSceneRef?.StoppedGame ?? false;
 }

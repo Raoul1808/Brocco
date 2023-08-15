@@ -29,7 +29,7 @@ public struct BroccoGameSettings
     public string AssetsDirectory;
 
     /// <summary>
-    /// The canvas' clear color. Defaults to Black.
+    /// The canvas' default clear color. Defaults to Black.
     /// </summary>
     public Color ClearColor;
 
