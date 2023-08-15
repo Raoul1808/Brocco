@@ -38,7 +38,7 @@ Auto-Systems are supposed to be used to add something to the base game loop, the
 
 The feature is still Work In Progress, so expect the API to grow in the future.
 
-Brocco comes with a Dear ImGui auto-system. You can use it by adding a reference to Brocco.ImGui.csproj in your project. **Make sure you also have [cimgui](https://github.com/ImGuiNET/ImGui.NET/tree/master/deps/cimgui) in the output folder of your project when running it.**
+Brocco comes with a Dear ImGui auto-system. You can use it by adding a reference to Brocco.ImGui.csproj in your project. **Make sure you also have [cimgui](deps) in the output folder of your project when running it.**
 
 ## License
 
