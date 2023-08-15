@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Brocco.ImGui\Brocco.ImGui.csproj" />
       <ProjectReference Include="..\Brocco\Brocco.csproj" />
     </ItemGroup>
 

@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Brocco.Basic;
 using Brocco.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SDL2;
 
 namespace Brocco;
 
@@ -20,6 +20,10 @@ public sealed class BroccoGame : Game
     private float _canvasRenderScale;
     private readonly Vector2 _canvasDrawOffset;
     private readonly Color _clearColor;
+
+    private List<BroccoAutoSystem> _systems;
+
+    private bool _isRunning = false;
 
     /// <summary>
     /// Creates a Brocco Game Loop with default settings.
@@ -48,6 +52,15 @@ public sealed class BroccoGame : Game
         {
             SetResolution(Window.ClientBounds.Width, Window.ClientBounds.Height);
         };
+        _systems = new List<BroccoAutoSystem>();
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        _isRunning = true;
+        foreach (var system in _systems)
+            system.Initialize(this);
     }
 
     protected override void LoadContent()
@@ -61,11 +74,15 @@ public sealed class BroccoGame : Game
 
     protected override void Update(GameTime gameTime)
     {
+        foreach (var system in _systems)
+            system.PreUpdate(gameTime);
         if (SceneManager.ReceivedStop())
             Exit();
         InputManager.Update();
         SceneManager.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
         base.Update(gameTime);
+        foreach (var system in _systems)
+            system.PostUpdate(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -83,6 +100,8 @@ public sealed class BroccoGame : Game
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, SceneManager.GetScreenEffect());
         SceneManager.ScreenRender(_spriteBatch);
         _spriteBatch.End();
+        foreach (var system in _systems)
+            system.Render(_spriteBatch, gameTime);
         base.Draw(gameTime);
     }
 
@@ -100,5 +119,20 @@ public sealed class BroccoGame : Game
         _screenCenter = new Vector2(width / 2f, height / 2f);
         _canvasRenderScale = Math.Min(width / (float)_canvasSize.Width, height / (float)_canvasSize.Height);
         InputManager.CanvasRenderScale = _canvasRenderScale;
+    }
+
+    /// <summary>
+    /// Adds a new Brocco Auto System to the Brocco Game Loop.
+    /// </summary>
+    /// <typeparam name="T">The type of the system to add</typeparam>
+    /// <exception cref="Exception">Thrown if the game is currently running</exception>
+    public void AddSystem<T>() where T : BroccoAutoSystem
+    {
+        if (_isRunning)
+            throw new Exception("Cannot add a new system after the game started.");
+        if (_systems.FindIndex(system => system.GetType() == typeof(T)) != -1)
+            return;
+        var system = (BroccoAutoSystem)Activator.CreateInstance<T>();
+        _systems.Add(system);
     }
 }

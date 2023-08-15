@@ -15,6 +15,7 @@ This is a non-exhaustive list of Brocco's currently implemented features.
 - Mouse Input Handling (**WORK IN PROGRESS, DOESN'T SCALE NICELY WITH ANY RESOLUTION**)
 - High-Level Menu Builder API
 - Automatic Keyboard Menu Navigation Management
+- Separate ImGui module
 
 ## Building
 1. Download and install the .NET 6 SDK
@@ -28,6 +29,16 @@ This is a non-exhaustive list of Brocco's currently implemented features.
 4. Run
 
 ### For usage in other projects, please check the wiki (WIP)
+
+## About Auto-Systems
+
+Brocco features something I like to call "auto-systems". These are basically user-defined systems you can optionally add to the Brocco Game Loop. Unlike scenes, auto-systems update directly from the loop, and at all time.
+
+Auto-Systems are supposed to be used to add something to the base game loop, they are NOT to be used for regular game logic.
+
+The feature is still Work In Progress, so expect the API to grow in the future.
+
+Brocco comes with a Dear ImGui auto-system. You can use it by adding a reference to Brocco.ImGui.csproj in your project. **Make sure you also have [cimgui](https://github.com/ImGuiNET/ImGui.NET/tree/master/deps/cimgui) in the output folder of your project when running it.**
 
 ## License
 

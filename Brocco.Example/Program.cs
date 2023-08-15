@@ -1,4 +1,5 @@
 ﻿using Brocco.Basic;
+using Brocco.ImGuiNet;
 using Microsoft.Xna.Framework;
 
 namespace Brocco.Example;
@@ -15,6 +16,7 @@ internal class Program
             ClearColor = Color.CornflowerBlue,
         });
         game.Window.Title = "Example Game Made With Brocco";
+        game.AddSystem<ImGuiManager>();
         
         Assets.PreloadFont("Noto Sans", new[] {"NotoSans-Medium.ttf"});
 

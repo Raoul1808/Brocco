@@ -1,7 +1,9 @@
 using System;
+using Brocco.ImGuiNet;
 using Brocco.Input;
 using Brocco.Menu;
 using FontStashSharp;
+using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -28,6 +30,16 @@ public class ExampleScene : Scene
             .AddArraySelect("I am", new [] {"Raoul1808", "Mew", "Both"})
             .AddButton("Exit", sender => {ExitGame();})
             .Build();
+    }
+
+    public override void OnBecomeActive()
+    {
+        ImGuiManager.OnLayout += TestLayout;
+    }
+
+    public override void OnBecomeInactive()
+    {
+        ImGuiManager.OnLayout -= TestLayout;
     }
 
     public override void Update(float dt)
@@ -60,6 +72,16 @@ public class ExampleScene : Scene
                 Console.Write(key + " ");
             Console.WriteLine();
         }
+    }
+
+    private void TestLayout()
+    {
+        ImGui.Begin("Hello, Word!");
+        if (ImGui.Button("Hola"))
+        {
+            Console.WriteLine("Hallo");
+        }
+        ImGui.End();
     }
 
     public override void ScreenRender(SpriteBatch spriteBatch)
