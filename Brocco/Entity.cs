@@ -65,6 +65,11 @@ public abstract class Entity
     public Anchor Anchor = Anchor.MiddleCenter;
 
     /// <summary>
+    /// This entity's current sprite effect. Defaults to None. Mainly used for rendering.
+    /// </summary>
+    public SpriteEffects Flip = SpriteEffects.None;
+
+    /// <summary>
     /// This entity's current scene.
     /// </summary>
     public Scene Scene { get; internal set; }
@@ -95,7 +100,7 @@ public abstract class Entity
     public virtual void Render(SpriteBatch spriteBatch)
     {
         var tex = CurrentTexture ?? Assets.Pixel;
-        spriteBatch.Draw(tex, BoundingBox, null, Color * Alpha, Rotation, Vector2.Zero, SpriteEffects.None, LayerDepth);
+        spriteBatch.Draw(tex, BoundingBox, null, Color * Alpha, Rotation, Vector2.Zero, Flip, LayerDepth);
     }
 
     /// <summary>
