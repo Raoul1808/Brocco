@@ -57,6 +57,23 @@ public static class SceneManager
         }
     }
 
+    /// <summary>
+    /// Reloads a scene. The Scene.Load() method will be called again.
+    /// </summary>
+    /// <param name="name"></param>
+    public static void Reload(string name)
+    {
+        if (_scenes.TryGetValue(name, out var scene))
+        {
+            if (_currentSceneRef == scene)
+                scene.OnBecomeInactive();
+            scene.Load();
+            scene.Loaded = true;
+            if (_currentSceneRef == scene)
+                scene.OnBecomeActive();
+        }
+    }
+
     internal static void Update(float dt)
     {
         _currentSceneRef?.InternalUpdate(dt);
