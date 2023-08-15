@@ -30,6 +30,7 @@ public static class SceneManager
                 scene.Load();
                 scene.Loaded = true;
             }
+        _currentSceneRef?.OnBecomeActive();
     }
 
     /// <summary>
@@ -48,7 +49,11 @@ public static class SceneManager
     public static void Change(string name)
     {
         if (_scenes.TryGetValue(name, out var scene))
+        {
+            _currentSceneRef?.OnBecomeInactive();
             _currentSceneRef = scene;
+            _currentSceneRef?.OnBecomeActive();
+        }
     }
 
     internal static void Update(float dt)

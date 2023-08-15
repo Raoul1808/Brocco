@@ -38,6 +38,20 @@ public abstract class Scene
     /// </summary>
     public virtual void Load() {}
 
+    /// <summary>
+    /// This is called when the scene becomes active.
+    /// </summary>
+    public virtual void OnBecomeActive()
+    {
+    }
+
+    /// <summary>
+    /// This is called when the scene becomes inactive.
+    /// </summary>
+    public virtual void OnBecomeInactive()
+    {
+    }
+
     internal void InternalUpdate(float dt)
     {
         if (PauseUpdate)
