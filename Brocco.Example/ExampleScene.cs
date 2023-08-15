@@ -37,8 +37,11 @@ public class ExampleScene : Scene
             PauseUpdate = !PauseUpdate;
         if (PauseUpdate)
         {
+            ClearColor = Color.Black;
             _pauseMenu.Update();
         }
+        else
+            ClearColor = null;
         
         _player.CollidedWith(_obstacle);
 
