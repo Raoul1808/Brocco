@@ -24,7 +24,7 @@ This is a non-exhaustive list of Brocco's currently implemented features.
 
 ### Running the example
 1. Build the example project
-2. Grab fnalibs over [here](https://fna.flibitijibibo.com/archive/fnalibs.tar.bz2)
+2. Grab the dependencies in the [deps](deps) directory for your platform
 3. Follow [these instructions](https://github.com/FNA-XNA/FNA/wiki/Appendix-E:-Modern-.NET-and-NativeAOT#when-developing) to get the native libraries correctly in place
 4. Run
 
