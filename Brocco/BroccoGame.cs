@@ -16,10 +16,12 @@ public sealed class BroccoGame : Game
     private SpriteBatch _spriteBatch;
     private RenderTarget2D _canvas;
     private readonly Size _canvasSize;
+    private Size _screenSize;
     private Vector2 _screenCenter;
     private float _canvasRenderScale;
     private readonly Vector2 _canvasDrawOffset;
     private readonly Color _clearColor;
+    private Vector2 _canvasOffset;
 
     private List<BroccoAutoSystem> _systems;
 
@@ -44,8 +46,7 @@ public sealed class BroccoGame : Game
         IsMouseVisible = settings.ShowMouse;
         _canvasSize = settings.CanvasSize;
         _canvasDrawOffset = new Vector2(_canvasSize.Width / 2f, _canvasSize.Height / 2f);
-        var sz = settings.Resolution ?? settings.CanvasSize * 2;
-        SetResolution(sz.Width, sz.Height);
+        _screenSize = settings.Resolution ?? settings.CanvasSize * 2;
         _clearColor = settings.ClearColor;
         Window.AllowUserResizing = settings.CanResize;
         Window.ClientSizeChanged += (sender, args) =>
@@ -72,7 +73,11 @@ public sealed class BroccoGame : Game
         base.Initialize();
         _isRunning = true;
         foreach (var system in _systems)
+        {
             system.Initialize(this);
+        }
+
+        SetResolution(_screenSize.Width, _screenSize.Height);
     }
 
     protected override void LoadContent()
@@ -124,6 +129,12 @@ public sealed class BroccoGame : Game
     /// <param name="height">Height in pixels</param>
     public void SetResolution(int width, int height)
     {
+        var oldEvent = new GameResizeEvent
+        {
+            WindowSize = _screenSize,
+            CanvasOffset = _canvasOffset,
+        };
+        
         _graphics.PreferredBackBufferWidth = width;
         _graphics.PreferredBackBufferHeight = height;
         _graphics.ApplyChanges();
@@ -131,6 +142,21 @@ public sealed class BroccoGame : Game
         _screenCenter = new Vector2(width / 2f, height / 2f);
         _canvasRenderScale = Math.Min(width / (float)_canvasSize.Width, height / (float)_canvasSize.Height);
         InputManager.CanvasRenderScale = _canvasRenderScale;
+
+        var csz = _canvasRenderScale * _canvasSize.ToVector2();
+        _canvasOffset = new Vector2(_screenCenter.X - csz.X / 2f, _screenCenter.Y - csz.Y / 2f);
+        InputManager.CanvasOffset = _canvasOffset;
+
+        var newEvent = new GameResizeEvent
+        {
+            WindowSize = _screenSize,
+            CanvasOffset = _canvasOffset,
+        };
+        
+        foreach (var system in _systems)
+        {
+            system.OnGameResize(oldEvent, newEvent);
+        }
     }
 
     /// <summary>

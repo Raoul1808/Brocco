@@ -62,7 +62,7 @@ public class ExampleScene : Scene
         {
             Vector2 pos = InputManager.GetCanvasMousePosition();
             _player.Position = pos;
-            Console.WriteLine(pos);
+            // Console.WriteLine(pos);
         }
 
         var keys = InputManager.GetNewKeyPresses();
@@ -77,12 +77,12 @@ public class ExampleScene : Scene
 
     private void TestLayout()
     {
-        ImGui.Begin("Hello, Word!");
-        if (ImGui.Button("Hola"))
-        {
-            Console.WriteLine("Hallo");
-        }
-        ImGui.End();
+        // ImGui.Begin("Hello, Word!");
+        // if (ImGui.Button("Hola"))
+        // {
+        //     Console.WriteLine("Hallo");
+        // }
+        // ImGui.End();
     }
 
     public override void ScreenRender(SpriteBatch spriteBatch)

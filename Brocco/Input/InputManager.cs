@@ -24,6 +24,7 @@ public static class InputManager
     private static string _currentTextInput;
 
     internal static float CanvasRenderScale;
+    internal static Vector2 CanvasOffset;
     internal static bool GameActive = true;
 
     private static int _leftInputTimer = 0;
@@ -232,7 +233,7 @@ public static class InputManager
     /// Get the current mouse position on the canvas.
     /// </summary>
     /// <returns>The relative mouse position on the canvas.</returns>
-    public static Vector2 GetCanvasMousePosition() => new Vector2(_mouse.X, _mouse.Y) / CanvasRenderScale;
+    public static Vector2 GetCanvasMousePosition() => (new Vector2(_mouse.X, _mouse.Y) - CanvasOffset) / CanvasRenderScale;
 
     /// <summary>
     /// Get the current mouse on the window relative to the top-right corner.

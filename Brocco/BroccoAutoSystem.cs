@@ -1,3 +1,4 @@
+using Brocco.Basic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -36,4 +37,18 @@ public abstract class BroccoAutoSystem
     public virtual void Render(SpriteBatch spriteBatch, GameTime gameTime)
     {
     }
+
+    /// <summary>
+    /// Called when the game resizes.
+    /// </summary>
+    public virtual void OnGameResize(GameResizeEvent oldState, GameResizeEvent newState)
+    {
+    }
+}
+
+public struct GameResizeEvent
+{
+    public Size WindowSize;
+    public Vector2 CanvasOffsetCenter;
+    public Vector2 CanvasOffset;
 }
