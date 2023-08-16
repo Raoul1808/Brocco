@@ -140,3 +140,41 @@ public sealed class MenuArraySelect<T> : MenuEntry
 
     public event MenuArraySelectChange OnMenuArraySelectChange;
 }
+
+public sealed class MenuTextInput : MenuEntry
+{
+    public string CurrentText { get; set; } = "";
+    private string _previousString = "";
+
+    public override void Update()
+    {
+        if (InputManager.GetKeyPress(Keys.Enter))
+        {
+            InputManager.StartTextInput(TextInputEvent, FinishTextInput);
+        }
+    }
+
+    private void TextInputEvent(string s)
+    {
+        CurrentText = s;
+    }
+
+    private void FinishTextInput()
+    {
+        _previousString = CurrentText;
+        OnMenuTextInputValidate?.Invoke(this, CurrentText);
+    }
+
+    public override void Render(SpriteBatch spriteBatch, FontSystem font, Vector2 position, Color color)
+    {
+        var f = font.GetFont(FontSize);
+        string text = Label + ": " + CurrentText;
+        var length = f.MeasureString(text);
+        length.Y = FontSize;
+        spriteBatch.DrawString(f, text, position, color, origin: length * 0.5f);
+    }
+
+    public delegate void MenuTextInputValidate(MenuTextInput sender, string text);
+
+    public event MenuTextInputValidate OnMenuTextInputValidate;
+}

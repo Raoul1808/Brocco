@@ -94,6 +94,20 @@ public class MenuBuilder
         return this;
     }
 
+    public MenuBuilder AddTextInput(string name, string initialOption = "", MenuTextInput.MenuTextInputValidate action = null)
+    {
+        var entry = new MenuTextInput()
+        {
+            Label = name,
+            FontSize = _menuSettings.FontSize,
+            CurrentText = initialOption,
+        };
+        if (action is not null)
+            entry.OnMenuTextInputValidate += action;
+        _menuEntries.Add(entry);
+        return this;
+    }
+
     /// <summary>
     /// Creates the final Menu instance, ready to use.
     /// </summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Brocco.Basic;
 using Microsoft.Xna.Framework;
@@ -17,10 +18,20 @@ public static class InputManager
     private static MouseState _oldMouse, _mouse;
     private static GamePadState[] _oldGamepads = new GamePadState[GAMEPADS], _gamepads = new GamePadState[GAMEPADS];
 
+    private static bool _inTextInput = false;
+    private static Action<string> _editStringCallback;
+    private static Action _endEditCallback;
+    private static string _currentTextInput;
+
     internal static float CanvasRenderScale;
+
+    private static int _leftInputTimer = 0;
+    public static bool JustLeftTextInput => _leftInputTimer > 0;
 
     internal static void Update()
     {
+        if (_leftInputTimer > 0)
+            _leftInputTimer--;
         _oldKeyboard = _keyboard;
         _oldMouse = _mouse;
         _gamepads.CopyTo(_oldGamepads, 0);
@@ -38,27 +49,63 @@ public static class InputManager
     /// </summary>
     /// <param name="key">The key to check</param>
     /// <returns>true if the key was just pressed; false otherwise</returns>
-    public static bool GetKeyPress(Keys key) => _keyboard.IsKeyDown(key) && _oldKeyboard.IsKeyUp(key);
+    public static bool GetKeyPress(Keys key) => !_inTextInput && _keyboard.IsKeyDown(key) && _oldKeyboard.IsKeyUp(key);
     
     /// <summary>
     /// Get if the specified key is held down.
     /// </summary>
     /// <param name="key">The key to check</param>
     /// <returns>true if the key is held down; false otherwise</returns>
-    public static bool GetKeyDown(Keys key) => _keyboard.IsKeyDown(key);
+    public static bool GetKeyDown(Keys key) => !_inTextInput && _keyboard.IsKeyDown(key);
     
     /// <summary>
     /// Get if the specified key was just released this frame.
     /// </summary>
     /// <param name="key">The key to check</param>
     /// <returns>true if the key was just released; false otherwise</returns>
-    public static bool GetKeyRelease(Keys key) => _keyboard.IsKeyUp(key) && _oldKeyboard.IsKeyDown(key);
+    public static bool GetKeyRelease(Keys key) => !_inTextInput && _keyboard.IsKeyUp(key) && _oldKeyboard.IsKeyDown(key);
 
     /// <summary>
     /// Get an array of all new key presses this frame.
     /// </summary>
     /// <returns>An array containing the newly pressed keys</returns>
-    public static Keys[] GetNewKeyPresses() => _keyboard.GetPressedKeys().Except(_oldKeyboard.GetPressedKeys()).ToArray();
+    public static Keys[] GetNewKeyPresses() => _inTextInput ? Array.Empty<Keys>() : _keyboard.GetPressedKeys().Except(_oldKeyboard.GetPressedKeys()).ToArray();
+
+    public static void StartTextInput(Action<string> editStringCallback, Action endCallback)
+    {
+        if (JustLeftTextInput) return;
+        TextInputEXT.TextInput += DoTextInput;
+        TextInputEXT.StartTextInput();
+        _inTextInput = true;
+        _editStringCallback = editStringCallback;
+        _endEditCallback = endCallback;
+    }
+
+    private static void StopTextInput()
+    {
+        _leftInputTimer = 2;
+        TextInputEXT.StopTextInput();
+        TextInputEXT.TextInput -= DoTextInput;
+        _inTextInput = false;
+        _endEditCallback?.Invoke();
+        _editStringCallback = null;
+        _endEditCallback = null;
+    }
+
+    private static void DoTextInput(char c)
+    {
+        if (_keyboard.IsKeyDown(Keys.Escape) || c == 13)
+        {
+            StopTextInput();
+            return;
+        }
+        Console.WriteLine("Input " + (int)c);
+        if (char.IsLetterOrDigit(c) || c == ' ')
+            _currentTextInput += c;
+        if (c == 8)
+            _currentTextInput = _currentTextInput.Remove(_currentTextInput.Length - 1);
+        _editStringCallback?.Invoke(_currentTextInput);
+    }
 
     /// <summary>
     /// Get if the specified gamepad button was just pressed this frame on any gamepad.
@@ -67,6 +114,7 @@ public static class InputManager
     /// <returns>true if the button was just pressed; false otherwise</returns>
     public static bool GetButtonPress(Buttons button)
     {
+        if (_inTextInput) return false;
         for (int i = 0; i < GAMEPADS; i++)
         {
             bool pressed = GetButtonPress(button, i);
@@ -82,7 +130,7 @@ public static class InputManager
     /// <param name="button">The button to check</param>
     /// <param name="index">The gamepad index to check</param>
     /// <returns>true if the button was just pressed; false otherwise</returns>
-    public static bool GetButtonPress(Buttons button, int index) => _gamepads[index].IsButtonDown(button) && _oldGamepads[index].IsButtonUp(button);
+    public static bool GetButtonPress(Buttons button, int index) => !_inTextInput && _gamepads[index].IsButtonDown(button) && _oldGamepads[index].IsButtonUp(button);
 
     /// <summary>
     /// Get if the specified gamepad button was just pressed this frame on the specified gamepad.
@@ -99,6 +147,7 @@ public static class InputManager
     /// <returns>true if the button is currently down; false otherwise</returns>
     public static bool GetButtonDown(Buttons button)
     {
+        if (_inTextInput) return false;
         for (int i = 0; i < GAMEPADS; i++)
         {
             bool down = GetButtonDown(button, i);
@@ -114,7 +163,7 @@ public static class InputManager
     /// <param name="button">The button to check</param>
     /// <param name="index">The gamepad index to check</param>
     /// <returns>true if the button is currently down; false otherwise</returns>
-    public static bool GetButtonDown(Buttons button, int index) => _gamepads[index].IsButtonDown(button);
+    public static bool GetButtonDown(Buttons button, int index) => !_inTextInput && _gamepads[index].IsButtonDown(button);
 
     /// <summary>
     /// Get if the specified gamepad button is held down this frame on the specified gamepad.
@@ -131,6 +180,7 @@ public static class InputManager
     /// <returns>true if the button was just released; false otherwise</returns>
     public static bool GetButtonRelease(Buttons button)
     {
+        if (_inTextInput) return false;
         for (int i = 0; i < GAMEPADS; i++)
         {
             bool released = GetButtonRelease(button, i);
@@ -161,21 +211,21 @@ public static class InputManager
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button was just pressed; false otherwise</returns>
-    public static bool GetClickPress(MouseButtons button) => _mouse.IsButtonDown(button) && _oldMouse.IsButtonUp(button);
+    public static bool GetClickPress(MouseButtons button) => !_inTextInput && _mouse.IsButtonDown(button) && _oldMouse.IsButtonUp(button);
 
     /// <summary>
     /// Get if the specified mouse button is held down this frame.
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button is currently down; false otherwise</returns>
-    public static bool GetClickDown(MouseButtons button) => _mouse.IsButtonDown(button);
+    public static bool GetClickDown(MouseButtons button) => !_inTextInput && _mouse.IsButtonDown(button);
 
     /// <summary>
     /// Get if the specified mouse button was just released this frame.
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button was just released; false otherwise</returns>
-    public static bool GetClickRelease(MouseButtons button) =>_mouse.IsButtonUp(button) && _oldMouse.IsButtonDown(button);
+    public static bool GetClickRelease(MouseButtons button) => !_inTextInput && _mouse.IsButtonUp(button) && _oldMouse.IsButtonDown(button);
 
     /// <summary>
     /// Get the current mouse position on the canvas.

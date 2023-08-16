@@ -28,6 +28,7 @@ public class ExampleScene : Scene
             .AddButton("Resume", sender => { PauseUpdate = false; })
             .AddToggle("Yes")
             .AddArraySelect("I am", new [] {"Raoul1808", "Mew", "Both"})
+            .AddTextInput("Please enter your name", action: (_, text) => Console.WriteLine("Hello " + text))
             .AddButton("Exit", sender => {ExitGame();})
             .Build();
     }
