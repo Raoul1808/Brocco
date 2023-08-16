@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 
 namespace Brocco.Basic;
@@ -34,6 +34,9 @@ public struct Size : IEquatable<Size>
         Width = point.X;
         Height = point.Y;
     }
+
+    [Pure]
+    public Vector2 ToVector2() => new Vector2(Width, Height);
     
     public bool Equals(Size other)
     {
