@@ -24,6 +24,7 @@ public static class InputManager
     private static string _currentTextInput;
 
     internal static float CanvasRenderScale;
+    internal static bool GameActive = true;
 
     private static int _leftInputTimer = 0;
     public static bool JustLeftTextInput => _leftInputTimer > 0;
@@ -211,21 +212,21 @@ public static class InputManager
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button was just pressed; false otherwise</returns>
-    public static bool GetClickPress(MouseButtons button) => !_inTextInput && _mouse.IsButtonDown(button) && _oldMouse.IsButtonUp(button);
+    public static bool GetClickPress(MouseButtons button) => GameActive && !_inTextInput && _mouse.IsButtonDown(button) && _oldMouse.IsButtonUp(button);
 
     /// <summary>
     /// Get if the specified mouse button is held down this frame.
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button is currently down; false otherwise</returns>
-    public static bool GetClickDown(MouseButtons button) => !_inTextInput && _mouse.IsButtonDown(button);
+    public static bool GetClickDown(MouseButtons button) => GameActive && !_inTextInput && _mouse.IsButtonDown(button);
 
     /// <summary>
     /// Get if the specified mouse button was just released this frame.
     /// </summary>
     /// <param name="button">The mouse button to check</param>
     /// <returns>true if the button was just released; false otherwise</returns>
-    public static bool GetClickRelease(MouseButtons button) => !_inTextInput && _mouse.IsButtonUp(button) && _oldMouse.IsButtonDown(button);
+    public static bool GetClickRelease(MouseButtons button) => GameActive && !_inTextInput && _mouse.IsButtonUp(button) && _oldMouse.IsButtonDown(button);
 
     /// <summary>
     /// Get the current mouse position on the canvas.

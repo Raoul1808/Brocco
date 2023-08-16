@@ -32,7 +32,7 @@ public sealed class BroccoGame : Game
         : this(new BroccoGameSettings())
     {
     }
-    
+
     /// <summary>
     /// Creates a Brocco Game Loop using the passed settings.
     /// </summary>
@@ -53,6 +53,18 @@ public sealed class BroccoGame : Game
             SetResolution(Window.ClientBounds.Width, Window.ClientBounds.Height);
         };
         _systems = new List<BroccoAutoSystem>();
+    }
+
+    protected override void OnActivated(object sender, EventArgs args)
+    {
+        InputManager.GameActive = true;
+        base.OnActivated(sender, args);
+    }
+
+    protected override void OnDeactivated(object sender, EventArgs args)
+    {
+        InputManager.GameActive = false;
+        base.OnDeactivated(sender, args);
     }
 
     protected override void Initialize()
