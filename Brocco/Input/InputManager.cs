@@ -103,7 +103,7 @@ public static class InputManager
             return;
         }
         Console.WriteLine("Input " + (int)c);
-        if (char.IsLetterOrDigit(c) || c == ' ')
+        if (char.IsLetterOrDigit(c) || c == ' ' || c == '.' || c == '-' || c == '_')
             _currentTextInput += c;
         if (c == 8 && _currentTextInput.Length > 0)
             _currentTextInput = _currentTextInput.Remove(_currentTextInput.Length - 1);
