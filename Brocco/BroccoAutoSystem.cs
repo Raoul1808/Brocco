@@ -49,6 +49,6 @@ public abstract class BroccoAutoSystem
 public struct GameResizeEvent
 {
     public Size WindowSize;
-    public Vector2 CanvasOffsetCenter;
     public Vector2 CanvasOffset;
+    public float CanvasRenderScale;
 }

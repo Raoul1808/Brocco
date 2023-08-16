@@ -133,6 +133,7 @@ public sealed class BroccoGame : Game
         {
             WindowSize = _screenSize,
             CanvasOffset = _canvasOffset,
+            CanvasRenderScale = _canvasRenderScale,
         };
         
         _graphics.PreferredBackBufferWidth = width;
@@ -151,6 +152,7 @@ public sealed class BroccoGame : Game
         {
             WindowSize = _screenSize,
             CanvasOffset = _canvasOffset,
+            CanvasRenderScale = _canvasRenderScale,
         };
         
         foreach (var system in _systems)
