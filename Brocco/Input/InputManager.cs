@@ -104,7 +104,7 @@ public static class InputManager
         Console.WriteLine("Input " + (int)c);
         if (char.IsLetterOrDigit(c) || c == ' ')
             _currentTextInput += c;
-        if (c == 8)
+        if (c == 8 && _currentTextInput.Length > 0)
             _currentTextInput = _currentTextInput.Remove(_currentTextInput.Length - 1);
         _editStringCallback?.Invoke(_currentTextInput);
     }
