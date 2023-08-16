@@ -106,7 +106,7 @@ public sealed class BroccoGame : Game
     {
         GraphicsDevice.SetRenderTarget(_canvas);
         GraphicsDevice.Clear(SceneManager.GetClearColor() ?? _clearColor);
-        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        _spriteBatch.Begin(SpriteSortMode.Deferred, SceneManager.GetCanvasBlendState() ?? BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         SceneManager.CanvasRender(_spriteBatch);
         _spriteBatch.End();
         GraphicsDevice.SetRenderTarget(null);

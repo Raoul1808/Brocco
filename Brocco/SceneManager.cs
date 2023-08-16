@@ -89,9 +89,11 @@ public static class SceneManager
         _currentSceneRef?.ScreenRender(spriteBatch);
     }
 
-    internal static Effect GetCanvasEffect() => _currentSceneRef?.CanvasEffect ?? null;
+    internal static BlendState GetCanvasBlendState() => _currentSceneRef?.BlendState;
+
+    internal static Effect GetCanvasEffect() => _currentSceneRef?.CanvasEffect;
     
-    internal static Effect GetScreenEffect() => _currentSceneRef?.ScreenEffect ?? null;
+    internal static Effect GetScreenEffect() => _currentSceneRef?.ScreenEffect;
 
     internal static Color? GetClearColor() => _currentSceneRef?.ClearColor;
 

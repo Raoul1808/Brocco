@@ -40,6 +40,11 @@ public abstract class Scene
     public Color? ClearColor { get; set; } = null;
 
     /// <summary>
+    /// The scene's current Blend State. Mainly used for rendering.
+    /// </summary>
+    public BlendState BlendState;
+
+    /// <summary>
     /// Override this if you want to load certain assets for certain entities.
     /// </summary>
     public virtual void Load() {}
