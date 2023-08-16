@@ -73,12 +73,13 @@ public static class InputManager
     /// <returns>An array containing the newly pressed keys</returns>
     public static Keys[] GetNewKeyPresses() => _inTextInput ? Array.Empty<Keys>() : _keyboard.GetPressedKeys().Except(_oldKeyboard.GetPressedKeys()).ToArray();
 
-    public static void StartTextInput(Action<string> editStringCallback, Action endCallback)
+    public static void StartTextInput(string currentString, Action<string> editStringCallback, Action endCallback)
     {
         if (JustLeftTextInput) return;
         TextInputEXT.TextInput += DoTextInput;
         TextInputEXT.StartTextInput();
         _inTextInput = true;
+        _currentTextInput = currentString;
         _editStringCallback = editStringCallback;
         _endEditCallback = endCallback;
     }

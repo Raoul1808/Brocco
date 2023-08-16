@@ -150,7 +150,7 @@ public sealed class MenuTextInput : MenuEntry
     {
         if (InputManager.GetKeyPress(Keys.Enter))
         {
-            InputManager.StartTextInput(TextInputEvent, FinishTextInput);
+            InputManager.StartTextInput(CurrentText, TextInputEvent, FinishTextInput);
         }
     }
 
