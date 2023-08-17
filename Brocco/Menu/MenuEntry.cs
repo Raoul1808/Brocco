@@ -1,3 +1,4 @@
+using System;
 using Brocco.Input;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
@@ -106,6 +107,11 @@ public sealed class MenuArraySelect<T> : MenuEntry
         _arrowLeftOffset = new Vector2(_startingOffset.X + labelLength + doubleSpace, 0);
         _optionOffset = new Vector2(_arrowLeftOffset.X + arrowLeftLength + singleSpace + longestStringLength * 0.5f, 0);
         _arrowRightOffset = new Vector2(_optionOffset.X + longestStringLength * 0.5f + singleSpace, 0);
+    }
+
+    public void SetIndex(int index)
+    {
+        CurrentOption = Math.Clamp(index, 0, SelectOptions.Length - 1);
     }
 
     public override void Update()

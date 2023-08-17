@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 
@@ -56,14 +57,16 @@ public class MenuBuilder
     /// Adds a toggle button to the menu builder.
     /// </summary>
     /// <param name="name">The label attached to the toggle</param>
+    /// <param name="startingState">The starting state of the toggle</param>
     /// <param name="action">The method that will run when this toggle changes state</param>
     /// <returns>The current <c>MenuBuilder</c> instance</returns>
-    public MenuBuilder AddToggle(string name, MenuToggle.MenuTogglePress action = null)
+    public MenuBuilder AddToggle(string name, bool startingState = false, MenuToggle.MenuTogglePress action = null)
     {
         var entry = new MenuToggle
         {
             Label = name,
             FontSize = _menuSettings.FontSize,
+            IsChecked = startingState,
         };
         if (action is not null)
             entry.OnTogglePress += action;
@@ -76,10 +79,11 @@ public class MenuBuilder
     /// </summary>
     /// <param name="name">The label attached to the selection</param>
     /// <param name="selections">The different possible selections as an array</param>
+    /// <param name="startingIndex">The starting index of the array select</param>
     /// <param name="action">The method that will run when the selection changes</param>
     /// <typeparam name="T">The type of the selection array</typeparam>
     /// <returns>The current <c>MenuBuilder</c> instance</returns>
-    public MenuBuilder AddArraySelect<T>(string name, T[] selections, MenuArraySelect<T>.MenuArraySelectChange action = null)
+    public MenuBuilder AddArraySelect<T>(string name, T[] selections, int startingIndex = 0, MenuArraySelect<T>.MenuArraySelectChange action = null)
     {
         var entry = new MenuArraySelect<T>()
         {
@@ -87,6 +91,7 @@ public class MenuBuilder
             FontSize = _menuSettings.FontSize,
             SelectOptions = selections,
         };
+        entry.SetIndex(startingIndex);
         entry.PrecalculateOffsets(_font);
         if (action is not null)
             entry.OnMenuArraySelectChange += action;
