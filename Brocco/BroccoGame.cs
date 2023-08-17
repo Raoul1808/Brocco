@@ -15,6 +15,7 @@ public sealed class BroccoGame : Game
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private RenderTarget2D _canvas;
+    private RenderTarget2D _screen;
     private readonly Size _canvasSize;
     private Size _screenSize;
     private Vector2 _screenCenter;
@@ -85,6 +86,7 @@ public sealed class BroccoGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _canvas = new RenderTarget2D(GraphicsDevice, _canvasSize.Width, _canvasSize.Height);
+        _screen = new RenderTarget2D(GraphicsDevice, _screenSize.Width, _screenSize.Height);
         Assets.Prepare(Content, GraphicsDevice);
         Assets.LoadFonts();
         SceneManager.LoadScenes();
@@ -110,13 +112,17 @@ public sealed class BroccoGame : Game
         _spriteBatch.Begin(SpriteSortMode.Deferred, SceneManager.GetCanvasBlendState() ?? BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         SceneManager.CanvasRender(_spriteBatch);
         _spriteBatch.End();
-        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.SetRenderTarget(_screen);
         GraphicsDevice.Clear(Color.Black);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, SceneManager.GetCanvasEffect());
         _spriteBatch.Draw(_canvas, _screenCenter, null, Color.White, 0f, _canvasDrawOffset, _canvasRenderScale, SpriteEffects.None, 1f);
         _spriteBatch.End();
-        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, SceneManager.GetScreenEffect());
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
         SceneManager.ScreenRender(_spriteBatch);
+        _spriteBatch.End();
+        GraphicsDevice.SetRenderTarget(null);
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp,DepthStencilState.Default, RasterizerState.CullNone, SceneManager.GetScreenEffect());
+        _spriteBatch.Draw(_screen, Vector2.Zero, Color.White);
         _spriteBatch.End();
         foreach (var system in _systems)
             system.Render(_spriteBatch, gameTime);
@@ -148,6 +154,9 @@ public sealed class BroccoGame : Game
         var csz = _canvasRenderScale * _canvasSize.ToVector2();
         _canvasOffset = new Vector2(_screenCenter.X - csz.X / 2f, _screenCenter.Y - csz.Y / 2f);
         InputManager.CanvasOffset = _canvasOffset;
+
+        _screen.Dispose();
+        _screen = new RenderTarget2D(GraphicsDevice, width, height);
 
         var newEvent = new GameResizeEvent
         {
