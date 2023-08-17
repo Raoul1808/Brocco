@@ -1,3 +1,4 @@
+using FontStashSharp;
 using Microsoft.Xna.Framework;
 
 namespace Brocco.Menu;
@@ -24,6 +25,16 @@ public struct MenuSettings
     /// The color of the selected option. Used only with a color SelectEffect.
     /// </summary>
     public Color SelectColor;
+
+    /// <summary>
+    /// The effect used when rendering text.
+    /// </summary>
+    public FontSystemEffect FontEffect;
+
+    /// <summary>
+    /// The strength of the font effect.
+    /// </summary>
+    public int FontEffectStrength;
     
     public MenuSettings()
     {
@@ -31,5 +42,7 @@ public struct MenuSettings
         TextColor = Color.White;
         SelectEffect = MenuSelectEffect.Color;
         SelectColor = Color.Yellow;
+        FontEffect = FontSystemEffect.None;
+        FontEffectStrength = 1;
     }
 }

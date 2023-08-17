@@ -25,6 +25,8 @@ public class ExampleScene : Scene
         {
             FontSize = 32f,
             SelectEffect = MenuSelectEffect.Underline,
+            FontEffect = FontSystemEffect.Stroked,
+            FontEffectStrength = 1,
         };
         
         _obstacle = AddToScene<Obstacle>();

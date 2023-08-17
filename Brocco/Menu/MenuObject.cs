@@ -19,6 +19,8 @@ public class MenuObject
     private MenuSelectEffect _selectEffect = MenuSelectEffect.Color;
     private Color _colorSelect;
     private Color _colorText;
+    private FontSystemEffect _fontEffect;
+    private int _fontEffectStrength;
 
     /// <summary>
     /// Creates a new menu instance.
@@ -26,13 +28,15 @@ public class MenuObject
     /// <param name="font">The font used by the menu</param>
     /// <param name="position">The starting position of the menu</param>
     /// <param name="fontSize">The font size used for text rendering</param>
-    public MenuObject(FontSystem font, Vector2 position, MenuSelectEffect effect, Color textColor, Color selectColor)
+    public MenuObject(FontSystem font, Vector2 position, MenuSelectEffect effect, Color textColor, Color selectColor, FontSystemEffect fontEffect, int fontEffectStrength)
     {
         _font = font;
         _position = position;
         _colorText = textColor;
         _colorSelect = selectColor;
         _selectEffect = effect;
+        _fontEffect = fontEffect;
+        _fontEffectStrength = fontEffectStrength;
     }
 
     /// <summary>
@@ -82,15 +86,15 @@ public class MenuObject
                 switch (_selectEffect)
                 {
                     case MenuSelectEffect.Color:
-                       entry.Render(spriteBatch, _font, pos, _colorSelect, TextStyle.None);
+                       entry.Render(spriteBatch, _font, pos, _colorSelect, TextStyle.None, _fontEffect, _fontEffectStrength);
                         break;
 
                     case MenuSelectEffect.Underline:
-                       entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.Underline);
+                       entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.Underline, _fontEffect, _fontEffectStrength);
                         break;
                 }
             else
-                entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.None);
+                entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.None, _fontEffect, _fontEffectStrength);
             previousFontSize = entry.FontSize;
         }
     }
