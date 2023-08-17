@@ -76,8 +76,9 @@ public sealed class BroccoGame : Game
         _isRunning = true;
         foreach (var system in _systems)
             system.PostInitialize(this);
-
+        
         SetResolution(_screenSize.Width, _screenSize.Height);
+        SceneManager.ActivateScene();
     }
 
     protected override void LoadContent()

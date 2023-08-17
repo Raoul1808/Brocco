@@ -31,6 +31,10 @@ public static class SceneManager
                 scene.Load();
                 scene.Loaded = true;
             }
+    }
+
+    internal static void ActivateScene()
+    {
         _currentSceneRef?.OnBecomeActive();
     }
 
