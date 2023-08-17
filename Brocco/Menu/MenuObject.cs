@@ -86,7 +86,7 @@ public class MenuObject
                         break;
 
                     case MenuSelectEffect.Underline:
-                       entry.Render(spriteBatch, _font, pos, _colorSelect, TextStyle.Underline);
+                       entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.Underline);
                         break;
                 }
             else
