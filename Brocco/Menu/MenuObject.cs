@@ -16,6 +16,9 @@ public class MenuObject
     private int _currentOption = 0;
     private Vector2 _position;
     private FontSystem _font;
+    private MenuSelectEffect _selectEffect = MenuSelectEffect.Color;
+    private Color _colorSelect;
+    private Color _colorText;
 
     /// <summary>
     /// Creates a new menu instance.
@@ -23,10 +26,13 @@ public class MenuObject
     /// <param name="font">The font used by the menu</param>
     /// <param name="position">The starting position of the menu</param>
     /// <param name="fontSize">The font size used for text rendering</param>
-    public MenuObject(FontSystem font, Vector2 position)
+    public MenuObject(FontSystem font, Vector2 position, MenuSelectEffect effect, Color textColor, Color selectColor)
     {
         _font = font;
         _position = position;
+        _colorText = textColor;
+        _colorSelect = selectColor;
+        _selectEffect = effect;
     }
 
     /// <summary>
@@ -72,7 +78,19 @@ public class MenuObject
             bool isCurrent = i == _currentOption;
             var entry = _entries[i];
             Vector2 pos = new Vector2(_position.X, _position.Y + i * previousFontSize * 1.125f);
-            entry.Render(spriteBatch, _font, pos, isCurrent ? Color.Yellow : Color.White);
+            if (isCurrent)
+                switch (_selectEffect)
+                {
+                    case MenuSelectEffect.Color:
+                       entry.Render(spriteBatch, _font, pos, _colorSelect, TextStyle.None);
+                        break;
+
+                    case MenuSelectEffect.Underline:
+                       entry.Render(spriteBatch, _font, pos, _colorSelect, TextStyle.Underline);
+                        break;
+                }
+            else
+                entry.Render(spriteBatch, _font, pos, _colorText, TextStyle.None);
             previousFontSize = entry.FontSize;
         }
     }

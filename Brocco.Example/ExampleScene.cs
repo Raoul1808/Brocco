@@ -20,11 +20,17 @@ public class ExampleScene : Scene
     public override void Load()
     {
         CanvasEffect = Assets.GetEffect("TestShader");
+
+        var menuSettings = new MenuSettings
+        {
+            FontSize = 32f,
+            SelectEffect = MenuSelectEffect.Underline,
+        };
         
         _obstacle = AddToScene<Obstacle>();
         _player = AddToScene<Player>();
         _font = Assets.GetFontSystem("Noto Sans");
-        _pauseMenu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100))
+        _pauseMenu = MenuBuilder.CreateMenu(_font, new Vector2(300, 100), menuSettings)
             .AddButton("Resume", sender => { PauseUpdate = false; })
             .AddToggle("Yes")
             .AddArraySelect("I am", new [] {"Raoul1808", "Mew", "Both"})
