@@ -24,6 +24,15 @@ public static class Assets
     /// </summary>
     public static Texture2D Pixel { get; private set; }
 
+    public static string TexturesRoot { get; set; }
+    public static string SoundsRoot { get; set; }
+    public static string FontsRoot { get; set; }
+    public static string EffectsRoot { get; set; }
+
+    private static string GetTexturesPath() => string.IsNullOrWhiteSpace(TexturesRoot) ? "" : TexturesRoot + "/";
+    private static string GetSoundsPath() => string.IsNullOrWhiteSpace(SoundsRoot) ? "" : SoundsRoot + "/";
+    private static string GetEffectsPath() => string.IsNullOrWhiteSpace(EffectsRoot) ? "" : EffectsRoot + "/";
+
     private static Dictionary<string, Texture2D> _loadedTextures = new();
     private static Dictionary<string, SoundEffect> _loadedSounds = new();
     private static Dictionary<string, FontSystem> _loadedFontFamilies = new();
@@ -49,7 +58,8 @@ public static class Assets
         if (_loadedTextures.TryGetValue(assetName, out var tex)) return tex;
         try
         {
-            tex = _content.Load<Texture2D>(assetName);
+            string path = GetTexturesPath() + assetName;
+            tex = _content.Load<Texture2D>(path);
             _loadedTextures.Add(assetName, tex);
             return tex;
         }
@@ -69,7 +79,8 @@ public static class Assets
         if (_loadedSounds.TryGetValue(assetName, out var sfx)) return sfx;
         try
         {
-            sfx = _content.Load<SoundEffect>(assetName);
+            string path = GetSoundsPath() + assetName;
+            sfx = _content.Load<SoundEffect>(path);
             _loadedSounds.Add(assetName, sfx);
             return sfx;
         }
@@ -100,7 +111,8 @@ public static class Assets
             FontSystem font = new();
             foreach (string file in fontToLoad.FontFiles)
             {
-                string path = Path.Join(_content.RootDirectory, file);
+                string f = string.IsNullOrWhiteSpace(FontsRoot) ? file : Path.Join(FontsRoot, file);
+                string path = Path.Join(_content.RootDirectory, f);
                 font.AddFont(File.ReadAllBytes(path));
             }
 
@@ -116,15 +128,16 @@ public static class Assets
     /// <summary>
     /// Gets a shader effect corresponding to the requested name. If the shader effect isn't already loaded, it will be cached when calling this method.
     /// </summary>
-    /// <param name="effectName">The effect to load/get</param>
+    /// <param name="assetName">The effect to load/get</param>
     /// <returns>The asset requested, or null if not found.</returns>
-    public static Effect GetEffect(string effectName)
+    public static Effect GetEffect(string assetName)
     {
-        if (_loadedEffects.TryGetValue(effectName, out var effect)) return effect;
+        if (_loadedEffects.TryGetValue(assetName, out var effect)) return effect;
         try
         {
-            effect = _content.Load<Effect>(effectName);
-            _loadedEffects.Add(effectName, effect);
+            string path = GetEffectsPath() + assetName;
+            effect = _content.Load<Effect>(path);
+            _loadedEffects.Add(assetName, effect);
             return effect;
         }
         catch

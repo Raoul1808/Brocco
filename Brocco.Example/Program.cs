@@ -17,6 +17,11 @@ internal class Program
         });
         game.Window.Title = "Example Game Made With Brocco";
         game.AddSystem<ImGuiManager>();
+
+        Assets.EffectsRoot = "Effects";
+        Assets.FontsRoot = "Fonts";
+        Assets.SoundsRoot = "Sounds";
+        Assets.TexturesRoot = "Textures";
         
         Assets.PreloadFont("Noto Sans", new[] {"NotoSans-Medium.ttf"});
 

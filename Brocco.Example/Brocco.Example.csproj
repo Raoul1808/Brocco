@@ -11,16 +11,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Content\PlayerShip.png">
+      <None Update="Content\Effects\TestShader.fxb">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Content\coin.wav">
+      <None Update="Content\Sounds\coin.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Content\NotoSans-Medium.ttf">
+      <None Update="Content\Fonts\NotoSans-Medium.ttf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Content\TestShader.fxb">
+      <None Update="Content\Textures\PlayerShip.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
