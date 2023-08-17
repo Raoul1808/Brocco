@@ -70,12 +70,12 @@ public sealed class BroccoGame : Game
 
     protected override void Initialize()
     {
+        foreach (var system in _systems)
+            system.PreInitialize(this);
         base.Initialize();
         _isRunning = true;
         foreach (var system in _systems)
-        {
-            system.Initialize(this);
-        }
+            system.PostInitialize(this);
 
         SetResolution(_screenSize.Width, _screenSize.Height);
     }

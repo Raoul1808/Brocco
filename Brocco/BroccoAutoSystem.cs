@@ -10,9 +10,16 @@ namespace Brocco;
 public abstract class BroccoAutoSystem
 {
     /// <summary>
+    /// Called before the game initializes.
+    /// </summary>
+    public virtual void PreInitialize(BroccoGame game)
+    {
+    }
+    
+    /// <summary>
     /// Called when the game is initialized.
     /// </summary>
-    public virtual void Initialize(BroccoGame game)
+    public virtual void PostInitialize(BroccoGame game)
     {
     }
 

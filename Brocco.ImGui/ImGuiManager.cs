@@ -9,7 +9,7 @@ public class ImGuiManager : BroccoAutoSystem
     private static ImGuiRenderer _imGuiRenderer;
     public static event Action OnLayout;
 
-    public override void Initialize(BroccoGame game)
+    public override void PostInitialize(BroccoGame game)
     {
         _imGuiRenderer = new ImGuiRenderer(game);
         _imGuiRenderer.RebuildFontAtlas();
