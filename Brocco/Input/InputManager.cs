@@ -102,7 +102,6 @@ public static class InputManager
             StopTextInput();
             return;
         }
-        Console.WriteLine("Input " + (int)c);
         if (char.IsLetterOrDigit(c) || c == ' ' || c == '.' || c == '-' || c == '_')
             _currentTextInput += c;
         if (c == 8 && _currentTextInput.Length > 0)
