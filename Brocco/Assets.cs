@@ -28,6 +28,7 @@ public static class Assets
     public static string SoundsRoot { get; set; }
     public static string FontsRoot { get; set; }
     public static string EffectsRoot { get; set; }
+    public static string AssetsPath => _content.RootDirectory;
 
     private static string GetTexturesPath() => string.IsNullOrWhiteSpace(TexturesRoot) ? "" : TexturesRoot + "/";
     private static string GetSoundsPath() => string.IsNullOrWhiteSpace(SoundsRoot) ? "" : SoundsRoot + "/";
