@@ -20,7 +20,7 @@ public sealed class MenuButton : MenuEntry
 {
     public override void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Enter))
+        if (InputManager.GetKeyPress(Keys.Enter) || InputManager.GetButtonPress(Buttons.A))
             OnButtonPress?.Invoke(this);
     }
 
@@ -43,7 +43,7 @@ public sealed class MenuToggle : MenuEntry
 
     public override void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Enter) || InputManager.GetKeyPress(Keys.Space) || InputManager.GetButtonPress(Buttons.A))
+        if (InputManager.GetKeyPress(Keys.Enter) || InputManager.GetButtonPress(Buttons.A))
         {
             IsChecked = !IsChecked;
             OnTogglePress?.Invoke(this, IsChecked);
@@ -155,7 +155,7 @@ public sealed class MenuTextInput : MenuEntry
 
     public override void Update()
     {
-        if (InputManager.GetKeyPress(Keys.Enter))
+        if (InputManager.GetKeyPress(Keys.Enter) || InputManager.GetButtonPress(Buttons.A))
         {
             InputManager.StartTextInput(CurrentText, TextInputEvent, FinishTextInput);
         }
@@ -168,7 +168,6 @@ public sealed class MenuTextInput : MenuEntry
 
     private void FinishTextInput()
     {
-        _previousString = CurrentText;
         OnMenuTextInputValidate?.Invoke(this, CurrentText);
     }
 
