@@ -12,7 +12,7 @@ This is a non-exhaustive list of Brocco's currently implemented features.
 - Text Rendering
 - Keyboard Input Handling
 - Gamepad Input Handling
-- Mouse Input Handling (**WORK IN PROGRESS, DOESN'T SCALE NICELY WITH ANY RESOLUTION**)
+- Mouse Input Handling
 - Partial Text Input Handling
 - High-Level Menu Builder API
 - Automatic Keyboard Menu Navigation Management
