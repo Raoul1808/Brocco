@@ -1,3 +1,8 @@
+### Archival notice
+I'm very unhappy with this "super-framework" I made for game jams. On one hand, it provides me with tools I would need to make a fully fleshed-out game with less effort than no tools at all, but on the other, the first and only game jam I used Brocco in turned the framework into a complete mess. I know the saying "if it's stupid but it works, then it's not stupid", or very successful games with extremely messy code (the most notorious example is UNDERTALE), but I'm still unhappy about the mess I made. Besides, I moved on to other languages like C and Rust, and nowadays I only use C# for modding (as of March 2025, may change in the future).
+
+This repository will be archived for preservation. You may learn a thing or two from this framework, but I recommend you don't.
+
 # Brocco
 A small .NET Library based on FNA to kickstart game projects.
  
